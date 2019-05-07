@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-header">
+      teste-chart
+      <select *ngIf = "data.chartTypes.length > 1" [(ngModel)]="data.chartType">
+            <option *ngFor="let ct of listChartType" value="{{ ct }}"> {{ ct }} </option>
+        </select>
+
+    </div>
+<div>
+  <div class="card-body" style="display: block" >
+
+    <canvas baseChart 
+      [datasets]="data.datasets"
+      [chartType]="data.chartType" 
+      [labels]="data.labels"
+      [options]="data.options"
+      [legend]="data.legend" 
+      [colors]="data.colors" 
+      > 
+    </canvas>
+  </div>
+  <!-- <button mat-button mat-raised-button color="primary" (click)="randomize()">Update</button> -->
+</div>
+</div>

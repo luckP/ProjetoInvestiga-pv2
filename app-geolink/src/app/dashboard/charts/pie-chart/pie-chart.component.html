@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-header">
+    Bar-chart
+
+    <select  [(ngModel)]="data.chartType">
+        <option value="pie"> pie </option>
+        <option value="doughnut"> doughnut </option>
+    </select>
+  </div>
+  <div class="card-body">
+    <div class="chart">
+      <canvas baseChart 
+        [data]="data.datasets"
+        [labels]="data.labels"
+        [chartType]="data.chartType"
+        [options]="data.options"
+        [colors]="data.colors"
+        [legend]="data.legend">
+      </canvas>
+    </div>
+  </div>
+</div>
+

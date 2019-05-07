@@ -1,0 +1,34 @@
+<div class="row pt-1" id="chartBox"  style="color:white">
+
+  <div *ngFor="let card of data.chartCards" [className]="classCard">
+    <div class="card">
+      <div class="card-header" [style.background-color]="card.cardColor">
+        {{ card.title }}
+      </div>
+      <div class="card-body col-12 p-1" [style.background-color]="card.cardColor">
+
+        <div class="row p-0">
+          <div class="col-8 text-justify">
+            <label style="width: 50px;">
+                {{ card.percent }}%
+            </label>
+          </div>
+          <div class="chart col-4 p-0">
+            <canvas baseChart
+            [data]="card.pieChartData"
+            [labels]="card.pieChartLabels"
+            [chartType]="card.pieChartType"
+            [colors]="card.backgroundColor"
+            [legend]="false"
+            [options]="options"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"
+            >
+          </canvas>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+<!-- <label>{{ parentData.count }}</label> -->
+</div>

@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="card-header p-0 pl-4 pr-4 row">
+      <label class="col-md-6 col-sm-6">
+        teste-chart
+        </label>
+        <form>
+          
+          <mat-form-field class="col-md-6 col-sm-6">
+            <mat-label>Select an option</mat-label>
+            <mat-select disableRipple (selectionChange)="onChange($event)" [(value)]="id_square" required> 
+              <mat-option *ngFor="let ct of listChartType" value="{{ ct }}"> {{ ct }} </mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          <mat-form-field class="col-md-6 col-sm-6">
+            <input matInput (selectedChanged)="onChange($event)" [(value)]="datepicker" [matDatepicker]="picker" placeholder="Choose a date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker  #picker></mat-datepicker>
+          </mat-form-field>
+        </form>
+    </div>
+  <div>
+    <div class="card-body" style="display: block" >
+      <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+      <canvas baseChart  
+        [datasets]="data.datasets"
+        [chartType]="data.chartType" 
+        [labels]="data.labels"
+        [options]="data.options"
+        [legend]="data.legend" 
+        [colors]="data.colors" 
+        > 
+      </canvas>
+    </div>
+  <!-- <button mat-button mat-raised-button color="primary" (click)="randomize()">Update</button> -->
+</div>
+</div>
