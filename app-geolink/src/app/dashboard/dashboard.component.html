@@ -1,0 +1,13 @@
+<app-loading id="loading" *ngIf="load"></app-loading>
+
+<app-charts-box [(inputData)]="data"></app-charts-box>
+<div class="row">
+    <app-line-bar-chart-inputs [(inputData)]="data.bar" class="col-md-12 col-sm-12 mt-4"></app-line-bar-chart-inputs>
+
+    <app-line-bar-chart [(inputData)]="data.bar" class="col-md-12 col-sm-12 mt-4"></app-line-bar-chart>
+    <app-line-bar-chart [(inputData)]="data.line" class="col-md-12 col-sm-12 mt-4"></app-line-bar-chart>
+    <!-- <app-chart [(inputData)]="data.pie" class="col-md-12 col-sm-12 mt-4"></app-chart> -->
+
+    <app-pie-chart [(inputData)]="data.pie" class="col-md-6 col-sm-12 mt-4"></app-pie-chart>
+    <app-radar-chart [(inputData)]="data" class="col-md-6 col-sm-12 mt-4"></app-radar-chart> 
+</div>

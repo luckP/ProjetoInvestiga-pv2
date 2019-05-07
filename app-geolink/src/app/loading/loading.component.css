@@ -1,0 +1,27 @@
+.main{
+    height: 100vh;
+    position: fixed;
+    z-index: 2;
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes loading {
+    from {transform: rotateY(0deg);}
+    to {transform: rotateY(360deg);}
+  }
+  
+  @keyframes loading {
+    from {transform: rotateY(0deg);}
+    to {transform: rotateY(360deg);}
+  }
+  
+  .main img{
+    animation: loading 3s infinite;
+
+    height: 40vh;
+  }
