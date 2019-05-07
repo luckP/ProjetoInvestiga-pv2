@@ -1,0 +1,15 @@
+#sideBar{
+    height: 100vh;
+    padding-top: 80px;
+    position: fixed;
+    background-color: #191f26; 
+    top: 56px;
+}
+
+#dashboard{
+    margin-top: 60px;
+}
+
+/* #container{
+    margin-top: 60px!important;
+} */
