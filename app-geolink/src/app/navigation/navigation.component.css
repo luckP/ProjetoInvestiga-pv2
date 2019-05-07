@@ -1,0 +1,29 @@
+#navbar{
+    /* background-color: #161a1e!important;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2), 0 3px, 6px rgba(0,0,0,0.25)!important; */
+
+    background-color: #f8f8f8!important;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2), 0 3px, 6px rgba(0,0,0,0.25)!important; 
+}
+
+a{
+    color: #000;
+}
+
+#img-logo, #img-logo-mobile{
+    height: 27px;
+}
+
+#img-logo-mobile{
+    display: none;
+}
+
+@media (max-width: 600px) {
+    #img-logo {
+        display: none;
+    }
+
+    #img-logo-mobile{
+        display: block;
+    }
+  }
