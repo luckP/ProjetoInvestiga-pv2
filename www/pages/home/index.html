@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Home</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+  <!-- MENU LATERAL -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+  <!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" href="css/master.css">
+  <link rel="stylesheet" href="css/leaflet.css" >
+  <link rel="stylesheet" href="../../css/master.css">
+  <link rel="stylesheet" href="../../css/bootstrap.min.css">
+
+  <script type="text/javascript" src="js/Polygon.js"></script>
+  <script type="text/javascript" src="../../js/jquery.js"></script>
+  <script type="text/javascript" src="../../js/global_settings.js"></script>
+  <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/leaflet.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
+
+
+</head>
+<body>
+  <style media="screen">
+  </style>
+  <nav>
+    <ul class="menu menu-left">
+      <li id="left_menu"><i class="left_menu fa fa-bars"></i></li>
+      <li> <input type="text" name="search" placeholder="Search"> </li>
+    </ul>
+
+    <ul class="menu menu-right">
+      <li><div class="alert"></div><i class="fa fa-comment"></i></li>
+      <li><div class="alert active"></div> <i class="fa fa-bell"></i></li>
+      <li class="nav-config-option"><i class="fa fa-cog"></i></li></li>
+    </ul>
+  </nav>
+  <!-- main div -->
+  <div class="main">
+    <div class="tools-polygon">
+      <span>Definir Zona</span>
+      <!-- <button id="btn_edit_polygon" class="tools-polygon-btn fa fa-edit" type="button" name="button"></button> -->
+    </div>
+    <div class="map-container">
+      <div id="map" style="height:100%"></div>
+    </div>
+  </div>
+</div>
+
+<div class="left-sidebar"></div>
+
+<div class="right-sidebar"></div>
+
+<div id="popup_new_polygon" class="popup">
+  <div class="popup-main">
+    <div class="popup-header">
+      <h1>NEW POLYGON</h1>
+    </div>
+    <div class="popup-body">
+      <input id="polygon_name" type="text" name="email" value="" placeholder="NOME">
+      <input id="polygon_color_text" readonly="readonly" type="text" name="email" value="ff0013" placeholder="COLOR">
+      <input id="polygon_color" type="color" name="email" value="#ff0013">
+    </div>
+    <div class="popup-footer">
+      <div id="popup_new_polygon_cancel" class="popup-button btn-cancel">CANCELAR</div>
+      <div id="popup_new_polygon_confirm" class="popup-button btn-confirm">CONFIRMAR</div>
+    </div>
+  </div>
+  <div class="popup-close"></div>
+</div>
+
+
+<script type="text/javascript" src="js/master.js"></script>
+<script type="text/javascript" src="js/master-leaflet.js"></script>
+<script src="js/services.js"></script>
+</body>
+</html>

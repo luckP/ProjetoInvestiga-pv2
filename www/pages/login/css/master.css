@@ -1,0 +1,459 @@
+
+*{
+  margin:0;
+  font-family: sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+nav{
+  width: 100%;
+  background-color: var(--color1, white);
+  box-shadow: 0 1px 10px #000;
+  position: fixed;
+  top: 0;
+}
+
+nav .logo{
+  width: 85px;
+  height: 55px;
+  background-image: url(../img/Taxi-link_logo_final-32.png);
+  background-size: cover;
+  float: left;
+  cursor: pointer;
+  margin-left: 25px;
+}
+
+ul.nav-menu{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  margin: 0 15px;
+  height: 100%;
+
+}
+
+li.menu-option{
+  float: left;
+  padding: 20px;
+  transition: .3s;
+  font-size: 16px;
+  font-weight: 300;
+  float: right;
+  border-left: 1px solid var(--color3, black);
+  height: 100%;
+  cursor:pointer;
+
+}
+
+li.menu-option:hover{
+  background-color: var(--color2, green);
+  color: var(--color1, white);
+}
+
+li.menu-logout{
+  display: none;
+}
+
+header{
+  background-image: url('../img/Taxi_woman_final.png');
+  background-attachment: fixed;
+  /* opacity: 0.7; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: black;
+  width: 100%;
+  height: calc(100vh - 50px);
+  margin-top: 50px;
+}
+
+.popup{
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  opacity: 0;
+  --size: 70px;
+  --margin: 10%;
+  --radius: 15px;
+}
+
+.popup-main{
+  width: 40%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--color2, green);
+  border-radius: var(--radius);
+  overflow: hidden;
+  opacity: 0;
+}
+
+.popup-header{
+  width: 100%;
+  height: var(--size);
+}
+
+.popup-header h1{
+  width: 100%;
+  height: 100%;
+  font-size: 30px;
+  /* text-align: center; */
+  margin-left: var(--margin);
+  line-height: var( --size);
+  color: white;
+}
+
+.popup-body{
+  width: 100%;
+  /* height: calc(100% - (2 * var(--size))); */
+  border-top: 1px solid var(--color1);
+  padding: 50px 0;
+}
+
+.popup-body input{
+  border: none;
+  font-size: 16px;
+  font-weight: 100;
+  padding: 10px;
+  padding-left: 20px;
+  width: 80%;
+  margin: 15px calc(var(--margin) - 10px);
+  margin-bottom: 0;
+  border-radius: var(--radius);
+  outline: none;
+}
+
+.forgot-password{
+  margin: 15px var(--margin);
+  /* width: 80%; */
+  /* text-align: right; */
+  float: right;
+}
+
+.forgot-password div{
+  width: 0;
+  height: 2px;
+  background: var(--color3);
+  /* margin-top: 3px; */
+  margin-left: 50%;
+}
+.forgot-password a{
+  text-decoration: none;
+  color: white;
+}
+
+.popup-body .popup_password_view{
+    margin-top: -35px;
+    position: absolute;
+    float: right;
+    margin-left: calc(35% - 10px);
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/view.png);
+    background-color: transparent;
+    background-position: center;
+    background-size: cover;
+    border: none;
+    outline: none;
+    opacity: .4;
+}
+
+.popup-footer{
+  width: 100%;
+  height: var(--size);
+  border-top: 1px solid var(--color1)
+  float: right;
+
+}
+
+.popup-footer .popup-button{
+  outline: none;
+  border: 0;
+  height: 100%;
+  font-size: 20px;
+  padding: 7px 0;
+
+  border-radius: 0;
+  border: none;
+  text-align: center;
+  line-height: var(--size);
+  color: var(--color3);
+  float: left;
+  border-left: 1px solid #ffffff20;
+  background-color: var(--color5);
+}
+
+.popup-footer .popup-button:hover{
+  background-color: #b3b3b3;
+}
+
+.popup-footer .popup-button-confirm{
+  background-color:  var(--color5);
+}
+
+.popup-footer .popup-button-confirm:hover {
+  background-color: #b3b3b3;
+}
+
+.popup-footer .popup-button-cancel{
+  background-color: var(--color5);
+}
+
+.popup-footer .popup-button-cancel:hover {
+  background-color: #b3b3b3;
+}
+
+.popup-close{
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: .3;
+  z-index: -1;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes loading {
+  0% {
+    -ms-transform: scale(1,1); /* IE 9 */
+    -webkit-transform: scale(1,1); /* Safari */
+    transform: scale(1,1); /* Standard syntax */
+  }
+  50%{
+    -ms-transform: scale(-1,1); /* IE 9 */
+    -webkit-transform: scale(-1,1); /* Safari */
+    transform: scale(-1,1); /* Standard syntax */
+  }
+  100% {
+    -ms-transform: scale(1,1); /* IE 9 */
+    -webkit-transform: scale(1,1); /* Safari */
+    transform: scale(1,1); /* Standard syntax */
+  }
+}
+
+@keyframes mymove {
+  0% {
+    -ms-transform: scale(1,1); /* IE 9 */
+    -webkit-transform: scale(1,1); /* Safari */
+    transform: scale(1,1); /* Standard syntax */
+  }
+  50%{
+    -ms-transform: scale(-1,1); /* IE 9 */
+    -webkit-transform: scale(-1,1); /* Safari */
+    transform: scale(-1,1); /* Standard syntax */
+  }
+  100% {
+    -ms-transform: scale(1,1); /* IE 9 */
+    -webkit-transform: scale(1,1); /* Safari */
+    transform: scale(1,1); /* Standard syntax */
+
+  }
+}
+
+.loading{
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: none;
+  opacity: 0;
+  transition: .3s;
+}
+
+.loading .main{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-image: url(../../../img/Taxi-link_logo_final-32-2-2.png);
+  background-repeat: no-repeat;
+  background-size: calc(100% / 2);
+  background-position: center;
+  animation: loading 2s infinite;
+}
+
+.loading .background{
+  width: 100%;
+  height: 100%;
+  background-color: #00000085;
+  position: absolute;
+  z-index: -1;
+}
+
+/* MENU LATERAL */
+
+.icon-bar1 {
+  width: 90px; /* Set a specific width */
+  background-color: #999999; /* Dark-grey background */
+  right: 0;
+  margin-top: 100px;
+  position: fixed;
+}
+
+.icon-bar1 a {
+  display: block; /* Make the links appear below each other instead of side-by-side */
+  text-align: center; /* Center-align text */
+  padding: 16px; /* Add some padding */
+  transition: all 0.3s ease; /* Add transition for hover effects */
+  color: white; /* White text color */
+  font-size: 36px; /* Increased font-size */
+}
+
+.icon-bar1 a:hover {
+  background-color: var(--color2); /* Add a hover color */
+}
+
+.active1 {
+  background-color: var(--color5); /* Add an active/current color */
+}
+
+/* MENU LATERAL */
+
+/* MENU HORIZONTAL */
+.dropdown{
+  text-align: center;
+  color: var(--cinza-elementos);
+  font-size: 25px;
+  padding: 12px 0;
+  float: left;
+  height: 34px;
+  line-height: 1;
+}
+
+.dropdown ul{
+  list-style-type: none;
+  width: 120px;
+  padding: 0px;
+  overflow: hidden;
+  height: 0;
+  background-color: var(--color1);
+  transition: .5s;
+  margin-top: 19px;
+}
+
+.dropdown ul:hover{
+  transition: .5s;
+}
+
+
+  .dropdown li{
+    width: 100%;
+    height: 40px;
+    text-align: center!important;
+    font-size: 15px;
+    line-height: 40px;
+    border: 1px solid var(--color3);
+  }
+
+  i.novaclasse.fas.fa-address-card {
+    margin-right: 0px;
+}
+
+.dropdown:hover {
+  background-color: var(--color2);
+}
+
+i.novaclasse.fa.fa-car {
+  margin-right: 4px;
+}
+
+  .dropdown li:hover{
+    background-color: var(--color2);
+  }
+
+
+
+.icon-bar2 {
+  width: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  float: left;
+  height: 34px;
+  position: absolute;
+  margin: 0 25%;
+  display: none;
+}
+
+.icon-bar2 a {
+  float: left; /* Float links side by side */
+  text-align: center; /* Center-align text */
+  width: 120px; /* Equal width (5 icons with 20% width each = 100%) */
+  padding: 12px 0; /* Some top and bottom padding */
+  height: 100%;
+  transition: all 0.3s ease; /* Add transition for hover effects */
+  color: var(--cinza-elementos); /* White text color */
+  font-size: 25px; /* Increased font size */
+}
+
+.icon-bar2 a:hover {
+  background-color: var(--color2); /* Add a hover color */
+}
+
+.active2 {
+  background-color: var(--color5); /* Add an active/current color */
+}
+
+/* MENU HORIZONTAL */
+
+/* MENU LATERAL2 */
+.option-menulat {
+  display: none;
+  height:200vh;
+}
+
+.icon-bar3 {
+  width: 90px; /* Set a specific width */
+  background-color: #999999; /* Dark-grey background */
+  left: 0;
+  margin-top: 10px;
+  position: absolute;
+  margin-top: 15%;
+}
+
+.icon-bar3 a {
+  display: block; /* Make the links appear below each other instead of side-by-side */
+  text-align: center; /* Center-align text */
+  padding: 16px; /* Add some padding */
+  transition: all 0.3s ease; /* Add transition for hover effects */
+  color: white; /* White text color */
+  font-size: 36px; /* Increased font-size */
+}
+
+.icon-bar3 a:hover {
+  background-color: var(--color2); /* Add a hover color */
+}
+
+.active3 {
+  background-color: var(--color5); /* Add an active/current color */
+}
+
+.textolateral{
+  background-color: var(--color2);
+  color: white;
+  display: none;
+  padding: 11px 16px 11px 21px;
+  position: fixed;
+  left:93px;
+}
+
+#listacarros{
+  position: fixed;
+  top: 251px;
+}
+
+#caracteristicas {
+  position: fixed;
+  top: 323px;
+}
+/* MENU LATERAL2 */

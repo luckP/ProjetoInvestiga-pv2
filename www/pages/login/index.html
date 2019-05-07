@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Taxi-Link </title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="css/master.css">
+  <link rel="stylesheet" href="../../css/master.css">
+  <link rel="stylesheet" href="../../css/bootstrap.min.css">
+
+  <!-- MENU LATERAL -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+  <!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
+  <script type="text/javascript" src="../../js/jquery.js"></script>
+  <script type="text/javascript" src="../../js/global_settings.js"></script>
+  <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+  
+</head>
+<body>
+  <nav>
+    <div class="logo"></div>
+
+
+    <!-- MENU HORIZONTAL -->
+    <div class="icon-bar2">
+      <a class="active2" href="#"><i class="fa fa-home"></i></a>
+      <a id="conta-button"><i class="fas fa-address-card"></i></a>
+      <a id="viatura-button"><i class="fa fa-car"></i></a>
+      <div class="dropdown">
+        <b>
+          <i class="fa fa-edit"></i>
+        </b>
+        <ul>
+          <p>
+            <li id="edit-conta-button"><i class="novaclasse fas fa-address-card"></i> Conta</li></p>
+            <li id="edit-vi-button"><i class="novaclasse fa fa-car"></i>Carros</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- MENU HORIZONTAL -->
+      <ul class="nav-menu">
+        <li id="menu_login" class="menu-option">LOGIN</li>
+        <li id="menu_register" class="menu-option menu-right">REGISTAR</li>
+        <li id="menu_logout" class="menu-option menu-right menu-logout">LOGOUT</li>
+      </ul>
+
+    </nav>
+<header>
+
+</header>
+
+
+    <!-- POPUP_LOGIN -->
+    <div id="popup_login" class="popup">
+      <div class="popup-main">
+        <div class="popup-header">
+          <h1>LOGIN</h1>
+        </div>
+        <div class="popup-body">
+          <input id="popup_email" type="email" name="email" value="" placeholder="EMAIL">
+          <div>
+            <input id="popup_password" type="password" name="email" value="" placeholder="PASSWORD">
+            <button class="popup_password_view" type="button" name="button"></button>
+          </div>
+          <div class="forgot-password">
+            <a href="#">Esqueceu a password?</a>
+            <div class=""></div>
+          </div>
+        </div>
+        <div class="popup-footer">
+          <div  id="btn_login1" class="popup-button">LOGIN</div>
+        </div>
+      </div>
+      <div class="popup-close"></div>
+    </div>
+
+    <!-- POPUP_REGISTER -->
+    <div id="popup_register" class="popup">
+      <div class="popup-main">
+        <div class="popup-header">
+          <h1>CRIAR CONTA</h1>
+        </div>
+        <div class="popup-body">
+          <input id="register_name" type="text" name="email" value="" placeholder="NOME">
+          <input id="register_email" type="email" name="email" value="" placeholder="EMAIL">
+          <div>
+            <input id="register_password" type="password" name="email" value="" placeholder="PASSWORD">
+            <button class="popup_password_view" type="button" name="button"></button>
+          </div>
+          <div>
+            <input id="register_password_confirm" type="password" name="email" value="" placeholder="REPETIR PASSWORD">
+            <button class="popup_password_view" type="button" name="button"></button>
+
+          </div>
+        </div>
+        <div class="popup-footer">
+          <div class="popup-button">CANCELAR</div>
+          <div id="popup_register_confirm" class="popup-button">CONFIRMAR</div>
+        </div>
+      </div>
+      <div class="popup-close"></div>
+    </div>
+
+    <!-- LOADDING ANIMATION -->
+    <div id="loading" class="loading">
+      <div class="main"></div>
+      <div class="background"></div>
+    </div>
+
+    <script type="text/javascript" src="js/master.js"></script>
+    <script type="text/javascript" src="js/system_client.js">
+
+    </script>
+  </body>
+  </html>

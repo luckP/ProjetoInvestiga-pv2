@@ -1,0 +1,46 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+*{
+    box-sizing: border-box;
+}
+
+html{
+    height: 100%;
+}
+
+body{
+    font-family: 'Source Sans Pro', sans-serif;
+    background-image: url(assets/img/Taxi_woman_final.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    /* color: #f7fff7!important; */
+    height: 100%!important;
+}
+
+a{
+    color: #44a4cd!important;
+}
+
+a:hover{
+    color: #44a8cf!important;
+}
+
+.shadow{
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2), 0 5px, 6px rgba(0,0,0,0.3);
+}
+
+.section-container{
+    padding: 30px;
+}
+
+.ng-container{
+    margin-top: 60px!important;
+}
+
+*:focus {
+    outline:0!important;
+}
+
+
