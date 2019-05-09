@@ -1,0 +1,32 @@
+<div class="card">
+    <div class="card-header">
+        Bar-chart
+        <select [(ngModel)]="type">
+            <option value="bar">Bar</option>
+            <option value="line">Line</option>
+            <!-- <option value="doughnut">doughnut</option>
+            <option value="radar">radar</option>
+            <option value="pie">pie</option>
+            <option value="polarArea">polarArea</option>
+            <option value="bubble">bubble</option>
+            <option value="scatter">scatter</option> -->
+          </select>
+
+          <label> {{ type }} </label>
+      </div>
+  <div>
+    <div class="card-body" style="display: block" >
+      
+      <canvas baseChart 
+        [datasets]="bar.datasets"
+        [labels]="bar.labels"
+        [options]="bar.options"
+        [legend]="bar.legend" 
+        [chartType]="type" 
+        [colors]="bar.colors" 
+        > 
+      </canvas>
+    </div>
+    <!-- <button mat-button mat-raised-button color="primary" (click)="randomize()">Update</button> -->
+  </div>
+</div>

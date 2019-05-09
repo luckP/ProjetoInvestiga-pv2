@@ -8142,6 +8142,7 @@ INFO:tornado.general:web.py modified; restarting server
 INFO:root:8010
 INFO:tornado.access:200 POST /LoadAllEventsData (::1) 93.55ms
 INFO:tornado.access:200 POST /LoadAllEventsData (::1) 277889.56ms
+<<<<<<< HEAD
 INFO:root:8010
 INFO:tornado.access:200 POST /LoadAllEventsData (::1) 330242.97ms
 INFO:tornado.general:/Users/lucp/MEGA/FCUP/Ano_03/Semestre2/Project/Prototype/serve/handlers/app.py modified; restarting server
@@ -8169,3 +8170,5 @@ INFO:tornado.access:200 POST /LoadAllEventsData (::1) 5685.59ms
 INFO:tornado.access:200 POST /LoadAllEventsData (::1) 5671.05ms
 INFO:tornado.access:200 POST /LoadAllEventsData (::1) 5523.59ms
 INFO:tornado.access:200 POST /LoadAllEventsData (::1) 5064.78ms
+=======
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b

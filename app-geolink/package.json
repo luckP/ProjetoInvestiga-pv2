@@ -11,7 +11,11 @@
   },
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "@angular/animations": "^7.2.14",
+=======
+    "@angular/animations": "^7.2.12",
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
     "@angular/cdk": "^7.3.7",
     "@angular/common": "~7.2.0",
     "@angular/compiler": "~7.2.0",
@@ -25,6 +29,7 @@
     "angular-chart.js": "^1.1.1",
     "chart.js": "^2.8.0",
     "core-js": "^2.5.4",
+<<<<<<< HEAD
     "hammerjs": "^2.0.8",
     "jquery": "^3.4.0",
     "leaflet": "^1.4.0",
@@ -32,6 +37,11 @@
     "luxon-angular": "^1.1.0",
     "ng2-charts": "^2.2.2",
     "ngx-material-timepicker": "^3.0.3",
+=======
+    "jquery": "^3.4.0",
+    "leaflet": "^1.4.0",
+    "ng2-charts": "^2.2.2",
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"

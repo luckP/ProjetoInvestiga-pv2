@@ -1,0 +1,20 @@
+<div class="card">
+    <div class="card-header">
+      Bar-chart
+    </div>
+<div class="flex card-body">
+  <div class="flex-item">
+    <div style="display: block;">
+        <canvas baseChart width="400" height="400"
+        [datasets]="line.datasets"
+        [labels]="line.labels"
+        [options]="line.options"
+        [colors]="line.colors"
+        [legend]="line.legend"
+        [chartType]="line.chartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"></canvas>
+      </div>
+    </div>
+  </div>
+</div>

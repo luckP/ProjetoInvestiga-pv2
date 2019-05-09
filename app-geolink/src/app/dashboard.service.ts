@@ -12,10 +12,13 @@ export class DashboardService {
   public loadAllEventsData(){
     return this.http.post<any>(this._loadAllEventsData, '');
   }
+<<<<<<< HEAD
 
   public selectDataByIdSquareDate(){
     return this.http.post<any>(this._loadAllEventsData, '');
   }
+=======
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
 }
 
 

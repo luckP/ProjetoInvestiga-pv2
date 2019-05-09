@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+=======
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
 *{
     box-sizing: border-box;
 }
@@ -39,8 +42,11 @@ a:hover{
     margin-top: 60px!important;
 }
 
+<<<<<<< HEAD
 *:focus {
     outline:0!important;
 }
 
+=======
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
 

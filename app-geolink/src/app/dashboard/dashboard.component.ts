@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
+<<<<<<< HEAD
+=======
+import { Observable } from 'rxjs';
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
 
 @Component({
   selector: 'app-dashboard',
@@ -42,7 +46,11 @@ export class DashboardComponent implements OnInit {
     this.data = {
       chartCards: [
         {
+<<<<<<< HEAD
           title: 'In',
+=======
+          title: 'recolha',
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
           pieChartLabels: ['Download Sales', 'In-Store Sales'],
           pieChartData: [[250, 1000]],
           percent: 25,
@@ -55,10 +63,17 @@ export class DashboardComponent implements OnInit {
               ]
             }
           ],
+<<<<<<< HEAD
           cardColor: '#10ac84'
         },
         {
           title: 'Out',
+=======
+          cardColor: '#55efc4'
+        },
+        {
+          title: 'rejeitado',
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
           pieChartLabels: ['Download Sales', 'In-Store Sales'],
           pieChartData: [[350, 1000]],
           percent: 35,
@@ -71,10 +86,17 @@ export class DashboardComponent implements OnInit {
               ]
             }
           ],
+<<<<<<< HEAD
           cardColor: '#ff9f43'
         },
         {
           title: 'Out Error',
+=======
+          cardColor: '#81ecec'
+        },
+        {
+          title: 'stop',
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
           pieChartLabels: ['Download Sales', 'In-Store Sales'],
           pieChartData: [[150, 1000]],
           percent: 15,
@@ -87,6 +109,7 @@ export class DashboardComponent implements OnInit {
               ]
             }
           ],
+<<<<<<< HEAD
           cardColor: '#ee5253'
         },
       ],
@@ -101,6 +124,66 @@ export class DashboardComponent implements OnInit {
             line: {
               tension: .1
             },
+=======
+          cardColor: '#74b9ff'
+        },
+        {
+          title: 'busy',
+          pieChartLabels: ['Download Sales', 'In-Store Sales'],
+          pieChartData: [[50, 1000]],
+          percent: 5,
+          pieChartType: 'pie',
+          backgroundColor: [
+            {
+              backgroundColor: [
+                'rgba(255, 255, 255, 0.3)',
+                'rgba(0, 0, 0, 0.3)',
+              ]
+            }
+          ],
+          cardColor: '#a29bfe'
+        },
+        {
+          title: 'free',
+          pieChartLabels: ['Download Sales', 'In-Store Sales'],
+          pieChartData: [[175, 1000]],
+          percent: 17.5,
+          pieChartType: 'pie',
+          backgroundColor: [
+            {
+              backgroundColor: [
+                'rgba(255, 255, 255, 0.3)',
+                'rgba(0, 0, 0, 0.3)',
+              ]
+            }
+          ],
+          cardColor: '#fd79a8'
+        },
+        {
+          title: 'pause',
+          pieChartLabels: ['Download Sales', 'In-Store Sales'],
+          pieChartData: [[25, 1000]],
+          percent: 2.5,
+          pieChartType: 'pie',
+          backgroundColor: [
+            {
+              backgroundColor: [
+                'rgba(255, 255, 255, 0.3)',
+                'rgba(0, 0, 0, 0.3)',
+              ]
+            }
+          ],
+          cardColor: '#fdcb6e'
+        },
+      ],
+      //BAR
+      bar:{
+        chartTypes: ['bar', 'line'],
+        chartType: 'bar',
+        legend: true,
+        options: {
+            responsive: true,
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
             // We use these empty structures as placeholders for dynamic theming.
             scales: { xAxes: [{}], yAxes: [{}] },
             plugins: {
@@ -183,6 +266,7 @@ export class DashboardComponent implements OnInit {
           { data: [65.41, 61.73, 76.73, 50.53, 46.72, 77.54, 34.67, 4.75, 44.39, 76.49, 90.09, 56.92 ], label: 'free' },
           { data: [94.31, 16.7, 96.07, 10.96, 49.91, 10.71, 71.35, 32.68, 37.93, 64.57, 38.06, 71.92], label: 'pause' }
         ],
+<<<<<<< HEAD
         legend: true,
         chartType: 'line',
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
@@ -193,6 +277,11 @@ export class DashboardComponent implements OnInit {
                 tension: .1
             }
         },
+=======
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
+        options: {
+          responsive: true,
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
         },
         colors: [
           { // recolha rgb(85, 238, 196)
@@ -242,8 +331,15 @@ export class DashboardComponent implements OnInit {
             pointBorderColor: '#fff',
             pointHoverBackgroundColor: '#fff',
             pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+<<<<<<< HEAD
           },
         ],
+=======
+          }
+        ],
+        legend: true,
+        chartType: 'line',
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
       },
 
       // PIE

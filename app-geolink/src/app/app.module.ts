@@ -15,6 +15,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SidebarComponent } from './sidebar/sidebar.component'; 
 import { ChartsModule } from 'ng2-charts';
+<<<<<<< HEAD
 import { PieChartComponent } from './dashboard/charts/pie-chart/pie-chart.component';
 import { PieDoughnutChartComponent } from './dashboard/charts/pie-doughnut-chart/pie-doughnut-chart.component';
 import { RadarChartComponent } from './dashboard/charts/radar-chart/radar-chart.component';
@@ -45,6 +46,16 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 // import ngTimePicker from 'angular-material-time-picker';
 
 import 'moment/locale/fr';
+=======
+import { BarChartComponent } from './dashboard/charts/bar-chart/bar-chart.component';
+import { LineChartComponent } from './dashboard/charts/line-chart/line-chart.component';
+import { PieChartComponent } from './dashboard/charts/pie-chart/pie-chart.component';
+import { RadarChartComponent } from './dashboard/charts/radar-chart/radar-chart.component';
+import { ChartsBoxComponent } from './dashboard/charts/charts-box/charts-box.component';
+import { LoadingComponent } from './loading/loading.component';
+import { ChartComponent } from './dashboard/charts/chart/chart.component';
+import { FooterComponent } from './footer/footer.component'; 
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
 
 @NgModule({
   declarations: [
@@ -57,6 +68,7 @@ import 'moment/locale/fr';
     MapComponent,
     DashboardComponent,
     SidebarComponent,
+<<<<<<< HEAD
     PieChartComponent,
     PieDoughnutChartComponent,
     RadarChartComponent,
@@ -65,6 +77,16 @@ import 'moment/locale/fr';
     FooterComponent,
     LineBarChartComponent,
     LineBarChartInputsComponent,
+=======
+    BarChartComponent,
+    LineChartComponent,
+    PieChartComponent,
+    RadarChartComponent,
+    ChartsBoxComponent,
+    LoadingComponent,
+    ChartComponent,
+    FooterComponent,
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
   ],
   imports: [
     BrowserModule,
@@ -72,6 +94,7 @@ import 'moment/locale/fr';
     FormsModule,
     HttpClientModule,
     LeafletModule.forRoot(),
+<<<<<<< HEAD
     ChartsModule,
     BrowserAnimationsModule,
     MatButtonModule, MatCheckboxModule,
@@ -88,6 +111,11 @@ import 'moment/locale/fr';
     // datepicker language
     { provide: MAT_DATE_LOCALE, useValue: 'pt-PT' },
   ],
+=======
+    ChartsModule
+  ],
+  providers: [],
+>>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
   bootstrap: [AppComponent]
 })
 export class AppModule { }
