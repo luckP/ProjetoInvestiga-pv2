@@ -1,0 +1,41 @@
+<div class="background-login">
+
+  
+  <div class="login-container row justify-content-center"> 
+      <mat-card class="col-10 col-md-6 mt-5">
+        <h2 class="title">Login</h2>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <input name="email" matInput placeholder="Email" [formControl]="emailFormControl"  
+            [errorStateMatcher]="matcher">
+            <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="emailFormControl.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field class="example-full-width">
+            <input type="password" matInput placeholder="Password" [formControl]="passwordFormControl" [errorStateMatcher]="matcher2">
+            <mat-error *ngIf="passwordFormControl.hasError('required')">
+              Password is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-checkbox color="primary"><span>Remember me</span></mat-checkbox>
+          <a class="forgot-password" disable>Forgot password?</a>
+          <br>
+          
+          <button mat-raised-button color="primary">Login</button>
+          
+          <div class="register pt-2 mt-5">
+            <span class="register">Don't have an account?</span>
+            <br>
+            <a routerLink="/register" class="register">Register</a>
+          </div>
+          
+        </form>
+      </mat-card>
+    </div>
+  </div>

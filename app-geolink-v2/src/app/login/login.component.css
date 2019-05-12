@@ -1,0 +1,47 @@
+button{
+    float: right;
+    margin: 15px 0;
+    width: 100%;
+    font-size: 18px;
+    padding: 5px;
+}
+
+span{
+    font-size: 14px;
+}
+
+mat-card.col-10.col-md-6.mt-5.mat-card {
+    opacity: 0.9;
+}
+
+.background-login{
+    height: 100%;
+    background-image: url('../../assets/img/Taxi_woman_final.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+
+  .title{
+    text-align: center;
+    font-weight: lighter;
+  }
+
+a.forgot-password {
+    float: right;
+    color: gray;
+    font-size: 14px;
+}
+
+.register{
+    text-align: center;
+}
