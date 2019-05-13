@@ -1,0 +1,28 @@
+<div class="container">
+  <button routerLink="/login" class="float-left position-absolute" mat-icon-button>
+    <mat-icon aria-label="icon-button">toc</mat-icon>
+  </button>
+
+  <br>
+  <br>
+  <div class="user-perfil row">
+    <div class="user-img col-4 p-3">
+
+    </div>
+    <ul class="user-data col-8">
+      <li class="user-name"> {{user.name}} </li>
+      <li class="user-name"> {{user.email}} </li> 
+      <li class="user-name"> {{user.status}} </li>
+    </ul>
+  </div>
+  
+  <nav>
+    <ul>
+      <li> <a routerLink="dashboard">dashboard</a> </li>
+      <li>Analytics</li>
+      <li>Charts</li>
+      <li>Map</li>
+    </ul>
+  </nav>
+  <div class="notes"></div>
+</div>

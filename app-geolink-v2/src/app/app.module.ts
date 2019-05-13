@@ -12,6 +12,9 @@ import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+// charts
+import { ChartsModule } from 'ng2-charts';
+
 // angular materias
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import {MatCardModule} from '@angular/material/card';
@@ -21,9 +24,13 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
-import { MainPageComponent } from './main-page/main-page.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { TopbarComponent } from './topbar/topbar.component';
+import { TopBarComponent } from './top-bar/top-bar.component';
+import { SideBarComponent } from './side-bar/side-bar.component';
+import {MatTreeModule} from '@angular/material/tree';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ChartLineBarComponent } from './chart-line-bar/chart-line-bar.component';
+import {MatSelectModule} from '@angular/material/select';
+import { MapComponent } from './map/map.component';
 
 
 @NgModule({
@@ -33,9 +40,12 @@ import { TopbarComponent } from './topbar/topbar.component';
     RegisterComponent,
     NavBarComponent,
     LoadingComponent,
-    MainPageComponent,
-    SidebarComponent,
-    TopbarComponent,
+    TopBarComponent,
+    SideBarComponent,
+    DashboardComponent,
+    ChartLineBarComponent,
+    MapComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -52,7 +62,10 @@ import { TopbarComponent } from './topbar/topbar.component';
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    MatIconModule
+    MatIconModule,
+    MatTreeModule,
+    ChartsModule,
+    MatSelectModule,
   ],
   providers: [
   ],

@@ -1,0 +1,25 @@
+
+<div class="cards-container row p-2">
+    <div *ngFor="let chart of charts" class="{{ chart.chartSize }} col-12">
+        <mat-card>
+            <mat-card-header>
+                    <div class="title col-6">
+                        <mat-card-title> {{chart.title}} </mat-card-title>
+                        <mat-card-subtitle> {{chart.subtitle}} </mat-card-subtitle>
+                    </div>
+                    <mat-form-field class="col-5">
+                    <select matNativeControl required [(ngModel)]="chart.chartType">
+                        <option *ngFor="let option of chart.types" value="{{ option }}">{{ option }}</option>
+                    </select>
+                    </mat-form-field>
+            </mat-card-header>
+            <mat-card-content>
+                <app-chart-line-bar [cahrt]="chart"></app-chart-line-bar>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button>LIKE</button>
+                <button mat-button>SHARE</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

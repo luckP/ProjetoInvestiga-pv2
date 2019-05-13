@@ -1,0 +1,16 @@
+<div class="flex">
+    <div class="flex-item">
+      <div style="display: block;">
+      <canvas baseChart
+                  [datasets]="cahrt.datasets" 
+                  [labels]="cahrt.labels"
+                  [options]="cahrt.options"
+                  [colors]="cahrt.colors"
+                  [legend]="cahrt.legend" 
+                  [chartType]="cahrt.chartType"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)">
+                </canvas>
+      </div>
+    </div>
+  </div>

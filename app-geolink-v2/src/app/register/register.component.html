@@ -1,10 +1,8 @@
 <div class="background-login">
-
-  
     <div class="login-container row justify-content-center"> 
-        <mat-card class="col-10 col-md-6 mt-5">
+        <mat-card class="col-10 col-md-5 mt-5">
           
-          <button routerLink="/login" class="float-left" mat-icon-button>
+          <button routerLink="/login" class="float-left position-absolute" mat-icon-button>
             <mat-icon aria-label="icon-button">keyboard_arrow_left</mat-icon>
           </button>
 
@@ -22,7 +20,7 @@
             </mat-form-field>
             
             <mat-form-field class="example-full-width">
-              <input type="password" matInput placeholder="Password" [formControl]="passwordFormControl" [errorStateMatcher]="matcher2">
+              <input type="password" matInput placeholder="Password" [formControl]="passwordFormControl" [errorStateMatcher]="matcher">
               <mat-error *ngIf="passwordFormControl.hasError('required')">
                 Password is <strong>required</strong>
               </mat-error>
@@ -33,13 +31,9 @@
               <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
                 Password is <strong>Confirm required</strong>
               </mat-error>
-
-              <mat-error *ngIf="emailFormControl.hasError('required')">
-                  Email is <strong>required</strong>
-                </mat-error>
             </mat-form-field>
             
-            <button class="col-5" mat-raised-button color="primary">Register</button>
+            <button class="col-12" mat-raised-button color="primary">Register</button>
           </form>
         </mat-card>
       </div>
