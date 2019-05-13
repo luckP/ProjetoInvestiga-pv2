@@ -33,7 +33,8 @@
               "src/assets/js/bootstrap.min.js",
               "src/assets/js/map.js",
               "src/assets/js/popper.min.js",
-              "src/assets/leaflet/leaflet.js"
+              "src/assets/leaflet/leaflet.js",
+              "src/assets/leaflet/leaflet.draw.js"
 
             ],
             "es5BrowserSupport": true
