@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { HttpClientModule } from '@angular/common/http';
 
 // bootstrap
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -71,6 +72,7 @@ import { DashboardRadarComponent } from './dashboard/dashboard-radar/dashboard-r
     NgbModule,
     NgbPaginationModule,
     NgbAlertModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,

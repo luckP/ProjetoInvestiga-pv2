@@ -279,7 +279,6 @@ class LoadAllEventsData(tornado.web.RequestHandler):
             # et2 = time.time()
             # self.write(resp)
             # print(time.time() - et2)
-<<<<<<< HEAD
             resp = {}
 
             ts = time.time();
@@ -288,12 +287,8 @@ class LoadAllEventsData(tornado.web.RequestHandler):
             df = pd.read_csv('./df.csv');
 
 
-=======
-
-
             ts = time.time();
             df = pd.read_sql(self.application.db_session.query(Events).statement, self.application.db_session.bind)
->>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
             print df
             print time.time() - ts
 

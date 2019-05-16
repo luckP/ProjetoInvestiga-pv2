@@ -8,7 +8,7 @@ from sqlalchemy import func, desc, case
 Base = declarative_base()
 
 class Users(Base):
-    __tablename__ = 'users'
+    __tablename__ = 'user'
     id = Column(Integer, primary_key=True, autoincrement=True)
     email = Column(String(45), nullable=False, unique=True)
     name = Column(String(45), nullable=False)

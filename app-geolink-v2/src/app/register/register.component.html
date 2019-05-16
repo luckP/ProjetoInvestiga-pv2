@@ -7,9 +7,18 @@
           </button>
 
           <h2 class="title">Register</h2>
+
           <form class="example-form">
+
+          <mat-form-field class="example-full-width">
+              <input type="text" matInput placeholder="Name" [(ngModel)]="name" [formControl]="nameFormControl" [errorStateMatcher]="matcher">
+              <mat-error *ngIf="passwordFormControl.hasError('required')">
+                Name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
             <mat-form-field class="example-full-width">
-              <input name="email" matInput placeholder="Email" [formControl]="emailFormControl"  
+              <input name="email" matInput placeholder="Email" [(ngModel)]="email" [formControl]="emailFormControl"  
               [errorStateMatcher]="matcher">
               <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                 Please enter a valid email address
@@ -20,20 +29,24 @@
             </mat-form-field>
             
             <mat-form-field class="example-full-width">
-              <input type="password" matInput placeholder="Password" [formControl]="passwordFormControl" [errorStateMatcher]="matcher">
+              <input type="password" matInput placeholder="Password" [(ngModel)]="password" [formControl]="passwordFormControl" [errorStateMatcher]="matcher">
               <mat-error *ngIf="passwordFormControl.hasError('required')">
                 Password is <strong>required</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field class="example-full-width">
-              <input type="password" matInput placeholder="Confirm Password" [formControl]="confirmPasswordFormControl" [errorStateMatcher]="matcher">
+              <input type="password" matInput placeholder="Confirm Password" [(ngModel)]="confPassword" [formControl]="confirmPasswordFormControl" [errorStateMatcher]="matcher">
               <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
                 Password is <strong>Confirm required</strong>
               </mat-error>
+
+              <mat-error *ngIf="password!=confPassword">
+                  Passwords do not <strong>match</strong>
+              </mat-error>  
             </mat-form-field>
             
-            <button class="col-12" mat-raised-button color="primary">Register</button>
+            <button (click)="onRegister()" class="col-12" mat-raised-button color="primary">Register</button>
           </form>
         </mat-card>
       </div>

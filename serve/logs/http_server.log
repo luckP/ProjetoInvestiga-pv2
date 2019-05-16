@@ -8172,3 +8172,17 @@ INFO:tornado.access:200 POST /LoadAllEventsData (::1) 5523.59ms
 INFO:tornado.access:200 POST /LoadAllEventsData (::1) 5064.78ms
 =======
 >>>>>>> 35aad6439ad51dfefe2a473dfb2c05a54218594b
+INFO:root:8010
+INFO:tornado.general:/Users/lucp/MEGA/FCUP/Ano_03/Semestre2/Project/Prototype/serve/handlers/app.py modified; restarting server
+INFO:root:8010
+WARNING:tornado.access:404 OPTIONS /register (::1) 5.44ms
+INFO:tornado.access:200 OPTIONS /Register (::1) 1.21ms
+INFO:tornado.access:200 POST /Register (::1) 1.14ms
+INFO:tornado.general:/Users/lucp/MEGA/FCUP/Ano_03/Semestre2/Project/Prototype/serve/handlers/app.py modified; restarting server
+INFO:root:8010
+INFO:tornado.access:200 OPTIONS /Register (::1) 1.45ms
+INFO:tornado.access:200 POST /Register (::1) 38.69ms
+INFO:tornado.general:/Users/lucp/MEGA/FCUP/Ano_03/Semestre2/Project/Prototype/serve/models/__init__.py modified; restarting server
+INFO:root:8010
+INFO:tornado.access:200 OPTIONS /Register (::1) 1.96ms
+INFO:tornado.access:200 POST /Register (::1) 41.57ms
