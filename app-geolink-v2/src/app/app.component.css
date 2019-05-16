@@ -1,3 +1,19 @@
-.side-bar{
-    width: 200px;
+mat-sidenav-container{
+    height: 100%;
 }
+
+mat-sidenav-container{
+    /* width: 30px; */
+}
+
+mat-sidenav{
+    /* background: lightslategray; */
+    width: 300px;
+}
+
+.sidebar-button{
+    position: absolute;
+    z-index: 100;
+    margin: 22px;
+}
+

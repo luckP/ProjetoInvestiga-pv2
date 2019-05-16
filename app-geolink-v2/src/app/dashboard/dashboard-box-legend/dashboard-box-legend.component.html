@@ -1,0 +1,59 @@
+<div class="box-container row">
+  <div *ngFor="let box of boxes | keyvalue" class="col-4 chart-card ">
+    <mat-card class="mat-elevation-z8">
+
+        <mat-grid-list cols="2" rowHeight="100px">
+            <mat-grid-tile>
+                {{ box.key | uppercase }}   
+                <br>
+                {{ boxes[box.key][1] }} 
+                <br>
+                {{ (boxes[box.key][0]+boxes[box.key][1])/boxes[box.key][1] * 10 }} 
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="chart-container">
+                    <canvas 
+                    baseChart 
+                    height="60px" 
+                    width="60px" 
+                    [data]="boxes[box.key]" 
+                    [chartType]="'doughnut'" 
+                    [options]="pieChartOptions"
+                    [colors]="pieChartColors"
+                    [legend]="false">
+                  </canvas>
+                </div>   
+            </mat-grid-tile>
+          </mat-grid-list>
+
+
+      <!-- <div class="row">
+        <span>
+          {{ box.key | uppercase }} 
+        </span> 
+      </div>
+      <div class="row">
+
+        <div class="chart-container">
+          <canvas 
+          baseChart 
+          height="60px" 
+          width="60px" 
+          [data]="boxes[box.key]" 
+          [chartType]="'doughnut'" 
+          [options]="pieChartOptions"
+          [colors]="pieChartColors"
+          [legend]="false">
+        </canvas>
+      </div> 
+      <div class="info-container">
+        
+        <span> 
+            <mat-icon> {{icons[box.key]}} </mat-icon>
+        </span>
+      </div>
+    </div>-->
+
+    </mat-card>
+  </div>
+</div>

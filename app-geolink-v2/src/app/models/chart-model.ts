@@ -5,6 +5,7 @@ export class ChartModel{
     title:string;
     subtitle:string;
     chartSize:string;
+    lock: boolean;
 
     datasets: ChartDataSets[];
     labels: Label[];
@@ -13,7 +14,7 @@ export class ChartModel{
     legend:boolean;
 
     chartType:string;
-    types:string[];
+    chartTypes:any[];
 
 
 }

@@ -5,20 +5,17 @@
         <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>drag_handle</mat-icon>
         </button> -->
-        {{dashboardSelected.name}}
-        <div class="float-right">
-          <span>home > <b>Dashboard</b></span> 
-          <!-- <button mat-stroked-button color="primary">Primary</button> -->
-        </div>
+
+        {{analyticsSelected.name}}
+ 
     </mat-card>
     <mat-menu #menu="matMenu"> 
         <button *ngFor="let dashboard of dashboards" (click)="selectDashboard(dashboard)" mat-menu-item>{{dashboard.name}}</button>
     </mat-menu>
-  </div>
-  
-  <app-dashboard-box-legend [boxes]="dataBox" ></app-dashboard-box-legend>
-  <app-dashboard-line [data]="dataLine"></app-dashboard-line>
-  <div class="row">
-    <app-dashboard-doughnut class="col-6" [data]="dataDoughnut"></app-dashboard-doughnut>
-    <app-dashboard-radar class="col-6" [data]="dataRadar"></app-dashboard-radar> 
 </div>
+    
+<ul class="cards-container row">
+  <li *ngFor="let chart of charts" class="{{ chart.chartSize }}">
+    <app-chart-card class="app-chart-card" [chart]=chart></app-chart-card>
+  </li>
+</ul>

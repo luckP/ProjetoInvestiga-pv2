@@ -1,0 +1,12 @@
+.dashboard-tools{
+    position: absolute;
+    margin-left: calc(100% - 66px);
+ }
+
+ .mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+
+  .card-container{
+     padding-top: 15px;
+  }

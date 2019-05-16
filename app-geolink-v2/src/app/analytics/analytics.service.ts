@@ -5,30 +5,9 @@ import { DashBoardModel } from '../models/dashboard-model';
 @Injectable({
   providedIn: 'root'
 })
-export class DashboardService {
-  private arr = this.loadFakeData();
+export class AnalyticsService {
+
   constructor() { }
-
-  public loadData(): any{
-    return this.arr;
-    
-  }
-
-  private loadFakeData(){
-    let arr = [];
-    let t = 1514764800;
-    for(let i=0; i<1000; i++){
-      t+=i*parseInt((Math.random() * 100000)+'');
-      arr.push({
-        'id': i,
-        'type': (parseInt((Math.random()*100)+'')%3 == 0)? 'in': (parseInt((Math.random()*100)+'')%3 == 0)? 'out':'out_error',
-        'timestamp': t,
-        'square': 'square'+i%10
-      });
-    }
-
-    return arr;
-  }
 
   public loadDashBoard(): ChartModel[] {
     return [
@@ -296,6 +275,4 @@ export class DashboardService {
       {id: 4, name: 'dashboard4'}
     ];
   }
-
-  
 }

@@ -1,0 +1,12 @@
+<div class="radar-container">
+  <mat-card class="mat-elevation-z8">
+    <div style="display: block">
+      <canvas baseChart
+        [datasets]="data"
+        [options]="radarChartOptions"
+        [labels]="radarChartLabels"
+        [chartType]="radarChartType">
+      </canvas>
+    </div>
+  </mat-card>
+</div>

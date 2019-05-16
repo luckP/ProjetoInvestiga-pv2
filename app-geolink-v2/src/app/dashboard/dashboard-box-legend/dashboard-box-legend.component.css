@@ -1,0 +1,23 @@
+.box-container{
+    padding: 0 15px 15px 15px;
+ }
+
+ .chart-card{
+    padding: 15px;
+ }
+
+ span{
+    font-size: 1em;
+ }
+
+ .info-container{
+   padding: 15px;
+}
+
+canvas{
+   margin: 15px;
+}
+
+mat-icon {
+    font-size: 40px!important;
+ }

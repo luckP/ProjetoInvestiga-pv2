@@ -1,0 +1,16 @@
+.dashboard-menu-container{
+    padding: 15px 15px 0 15px;
+ }
+ 
+ .cards-container{
+     padding: 0 15px 15px 15px;
+  }
+ 
+  .app-chart-card{
+     padding-bottom: 15px;
+  }
+ 
+  .top-card{
+     /* position: fixed; */
+     padding-left: 50px;
+  }

@@ -1,0 +1,58 @@
+
+    <div class="card-container">
+    <mat-card class="mat-elevation-z8">
+        <mat-card-header>
+            <div>
+                <mat-card-title> {{chart.title}} </mat-card-title>
+                <mat-card-subtitle> {{chart.subtitle}} </mat-card-subtitle>
+            </div>
+            <button [disabled]="chart.lock" class="dashboard-tools" mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>settings</mat-icon>
+            </button>
+            
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon>label</mat-icon>
+                    <mat-slide-toggle color="primary" [(ngModel)]="chart.legend">Legend</mat-slide-toggle>
+                </button>
+                
+                <button mat-menu-item>
+                    <mat-icon>photo_size_select_small</mat-icon>
+                    <mat-select [(ngModel)]="chart.chartSize">
+                        <mat-option *ngFor="let size of chartsSize" value="{{ size.val }}">{{ size.label }}
+                        </mat-option>
+                    </mat-select>
+                </button>
+                
+                <button *ngIf="chart.chartTypes.length>1" mat-menu-item>
+                    <mat-radio-group aria-label="Select an option" [(ngModel)]="chart.chartType">
+                        <mat-radio-button *ngFor="let option of chart.chartTypes" value="{{ option.val }}" color="primary">
+                            {{ option.label | uppercase }}
+                            <mat-icon>option.icon</mat-icon>    
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </button>
+            </mat-menu>
+            
+            
+        </mat-card-header>
+        <mat-card-content>
+            <app-chart-line-bar class="card-component" [cahrt]="chart"></app-chart-line-bar>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button [disabled]="chart.lock" mat-icon-button>
+                <mat-icon>delete</mat-icon>
+            </button>
+            
+            <button [disabled]="chart.lock" mat-icon-button>
+                <mat-icon>edit</mat-icon>
+            </button>
+            
+            <button mat-icon-button (click)="lockChart(chart)">
+                <mat-icon *ngIf="chart.lock">lock</mat-icon>
+                <mat-icon *ngIf="!chart.lock">lock_open</mat-icon>
+            </button>
+            
+        </mat-card-actions>
+    </mat-card>
+  </div>

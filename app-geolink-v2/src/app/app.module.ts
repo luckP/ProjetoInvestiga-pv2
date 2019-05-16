@@ -25,12 +25,25 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import { TopBarComponent } from './top-bar/top-bar.component';
-import { SideBarComponent } from './side-bar/side-bar.component';
 import {MatTreeModule} from '@angular/material/tree';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChartLineBarComponent } from './chart-line-bar/chart-line-bar.component';
 import {MatSelectModule} from '@angular/material/select';
 import { MapComponent } from './map/map.component';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ChartCardComponent } from './chart-card/chart-card.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { AnalyticsComponent } from './analytics/analytics.component';
+import { DashboardBoxLegendComponent } from './dashboard/dashboard-box-legend/dashboard-box-legend.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { DashboardLineComponent } from './dashboard/dashboard-line/dashboard-line.component';
+import { DashboardDoughnutComponent } from './dashboard/dashboard-doughnut/dashboard-doughnut.component';
+import { DashboardRadarComponent } from './dashboard/dashboard-radar/dashboard-radar.component';
 
 
 @NgModule({
@@ -41,10 +54,15 @@ import { MapComponent } from './map/map.component';
     NavBarComponent,
     LoadingComponent,
     TopBarComponent,
-    SideBarComponent,
     DashboardComponent,
     ChartLineBarComponent,
     MapComponent,
+    ChartCardComponent,
+    AnalyticsComponent,
+    DashboardBoxLegendComponent,
+    DashboardLineComponent,
+    DashboardDoughnutComponent,
+    DashboardRadarComponent,
 
   ],
   imports: [
@@ -66,6 +84,14 @@ import { MapComponent } from './map/map.component';
     MatTreeModule,
     ChartsModule,
     MatSelectModule,
+    MatMenuModule,
+    MatRadioModule,
+    MatSlideToggleModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatProgressBarModule,
+    MatSidenavModule,
+    MatGridListModule
   ],
   providers: [
   ],
