@@ -38,7 +38,7 @@
             <mat-form-field class="example-full-width">
               <input type="password" matInput placeholder="Confirm Password" [(ngModel)]="confPassword" [formControl]="confirmPasswordFormControl" [errorStateMatcher]="matcher">
               <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
-                Password is <strong>Confirm required</strong>
+                  Confirm Password is <strong>required</strong>
               </mat-error>
 
               <mat-error *ngIf="password!=confPassword">
