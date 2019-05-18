@@ -1,14 +1,14 @@
 <div class="box-container row">
   <div *ngFor="let box of boxes | keyvalue" class="col-4 chart-card ">
-    <mat-card class="mat-elevation-z8">
+    <mat-card class="mat-elevation-z8" color="primary">
 
         <mat-grid-list cols="2" rowHeight="100px">
             <mat-grid-tile>
                 {{ box.key | uppercase }}   
                 <br>
-                {{ boxes[box.key][1] }} 
+                {{ boxes[box.key] }} 
                 <br>
-                {{ (boxes[box.key][0]+boxes[box.key][1])/boxes[box.key][1] * 10 }} 
+                {{ (boxes[box.key] / total) * 100 | number : '1.2-2' }} %
             </mat-grid-tile>
             <mat-grid-tile>
                 <div class="chart-container">
@@ -16,11 +16,12 @@
                     baseChart 
                     height="60px" 
                     width="60px" 
-                    [data]="boxes[box.key]" 
+                    [data]="[boxes[box.key], total]" 
                     [chartType]="'doughnut'" 
                     [options]="pieChartOptions"
                     [colors]="pieChartColors"
-                    [legend]="false">
+                    [legend]="false"             
+                    >
                   </canvas>
                 </div>   
             </mat-grid-tile>

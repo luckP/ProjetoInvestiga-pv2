@@ -282,9 +282,9 @@ class LoadAllEventsData(tornado.web.RequestHandler):
             resp = {}
 
             ts = time.time();
-            # df = pd.read_sql(self.application.db_session.query(Events).statement, self.application.db_session.bind)
-            # df.to_csv(r'df.csv')
-            df = pd.read_csv('./df.csv');
+            df = pd.read_sql(self.application.db_session.query(Events).statement, self.application.db_session.bind)
+            df.to_csv(r'df.csv')
+            # df = pd.read_csv('./df.csv');
 
 
             ts = time.time();

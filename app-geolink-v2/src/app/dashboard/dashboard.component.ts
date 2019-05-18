@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   public progressBarVal: any = 0;
 
   private data: any = this.dashboardService.loadData();
-  public dataBox: any = {'in': [0,0], 'out': [0,0], 'out_error': [0,0]};
+  public dataBox: any = {'in': 0, 'out': 0, 'out_error': 0};
   public dataLine: ChartDataSets[] = [
     { data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], label: 'In' },
     { data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], label: 'Out' },
@@ -84,7 +84,7 @@ export class DashboardComponent implements OnInit {
 
     for(let data of this.data){
       // DATA_BOX
-      this.dataBox[data['type']][1]++;
+      this.dataBox[data['type']]++;
 
       // LINE
       var date = new Date(data['timestamp']);
@@ -107,11 +107,6 @@ export class DashboardComponent implements OnInit {
       }
         
       // DOUGHNUT
-
-      // p: 3 4 5
-      // v: 6 7 8
-      // o: 9 10 11
-      // i: 0 1 2 
       let season: number;
       if([0, 1, 2].includes(date.getMonth())){
         // winter
@@ -148,11 +143,9 @@ export class DashboardComponent implements OnInit {
           console.error(data['type']);
         }
       }
-
       // RADAR
 
       let day = date.getDay();
-      console.log(day);
       
       switch(data['type']){
         case 'in':{
@@ -171,12 +164,8 @@ export class DashboardComponent implements OnInit {
           console.error(data['type']);
         }
       }
-
-
     }
 
     console.log( this.dataDoughnut);
-    
-    
   } 
 }
