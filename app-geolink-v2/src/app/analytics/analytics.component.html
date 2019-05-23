@@ -2,16 +2,16 @@
 
 <div class="dashboard-menu-container">
     <mat-card class="mat-elevation-z8 top-card">
-        <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>drag_handle</mat-icon>
-        </button> -->
+        <button mat-icon-button color="accent" (click)="nav.openCloseSideBar()" class="sidebar-button bg-white">
+            <mat-icon aria-label="Example icon-button with a heart icon">menu</mat-icon>
+        </button>
 
         {{analyticsSelected.name}}
- 
+
+        <button mat-stroked-button color="primary" class="add" (click)="openAddDialog()">
+                <span>Add Analitycs</span><mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button>
     </mat-card>
-    <mat-menu #menu="matMenu"> 
-        <button *ngFor="let dashboard of dashboards" (click)="selectDashboard(dashboard)" mat-menu-item>{{dashboard.name}}</button>
-    </mat-menu>
 </div>
     
 <ul class="cards-container row">
@@ -19,3 +19,7 @@
     <app-chart-card class="app-chart-card" [chart]=chart></app-chart-card>
   </li>
 </ul>
+
+<button mat-mini-fab class="add-chart-button" color="primary" (click)="createChartDialog()">
+  <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+</button>

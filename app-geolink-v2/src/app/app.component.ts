@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavBarService } from './nav-bar-service.service';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
-  public openedSide:boolean = false;
+  constructor(public nav: NavBarService){}
 }

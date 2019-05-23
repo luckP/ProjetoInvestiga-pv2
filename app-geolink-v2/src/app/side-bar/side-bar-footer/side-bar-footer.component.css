@@ -1,0 +1,11 @@
+div.footer{
+    background-color: #2d3436;
+    /* background-color: slategrey; */
+    height: 60px;
+    line-height: 60px;
+    color: white;
+}
+
+div.container {
+    height: 60px!important;
+}

@@ -1,3 +1,6 @@
+mat-progress-bar{
+   z-index:100
+}
 span {
    font-size: 14px;
    margin-right: 15px;
@@ -13,9 +16,4 @@ span {
 
  .app-chart-card{
     padding-bottom: 15px;
- }
-
- .top-card{
-    /* position: fixed; */
-    padding-left: 50px;
  }

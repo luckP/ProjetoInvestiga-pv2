@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Add Analytics Chart</h2>
+<mat-dialog-content class="mat-typography">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Title" [formControl]="titleFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-hint>Errors appear instantly!</mat-hint>
+    <mat-error *ngIf="titleFormControl.hasError('required')">
+      Name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+<br>
+
+<mat-form-field>
+    <mat-label>Favorite food</mat-label>
+    <mat-select>
+    <mat-option *ngFor="let food of foods" [value]="food">
+    {{food}}
+    </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+
+  <mat-form-field class="example-full-width">
+    <textarea matInput placeholder="Description"  [formControl]="descriptionFormControl" [errorStateMatcher]="matcher"></textarea>
+    <mat-hint>Errors appear instantly!</mat-hint>
+    <mat-error *ngIf="descriptionFormControl.hasError('required')">
+      Name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <br>
+  
+  
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+  <button mat-raised-button color="primary" (click)="addChart()">Add</button>
+</mat-dialog-actions>

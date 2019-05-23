@@ -9,8 +9,13 @@
   .app-chart-card{
      padding-bottom: 15px;
   }
- 
-  .top-card{
-     /* position: fixed; */
-     padding-left: 50px;
+
+  .add{
+     float: right;
+  }
+
+  .add-chart-button{
+     position: fixed;
+     bottom: 30px;
+     right: 30px;
   }

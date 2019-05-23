@@ -12,3 +12,9 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 ul{list-style-type: none;}
+
+
+.leaflet-top.leaflet-left {
+    top: 100px;
+    left: 13px;
+}

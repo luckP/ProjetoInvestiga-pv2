@@ -86,6 +86,47 @@ class Polygon_coordinate(Base):
         self.lat=lat
         self.lng=lng
 
+# Analytics
+
+class Analytics(Base):
+    __tablename__ = 'analytics'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    id_user = Column(Integer, ForeignKey(Users.id), nullable=True)
+    name = Column(String(45), nullable=True)
+
+    def __init__(self, name=None, id_user=None):
+        self.name=name
+        self.id_user = id_user
+
+class Analytics_chart(Base):
+    __tablename__ = 'analytics_chart'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    analytics_id = Column(Integer, ForeignKey(Polygons.id), nullable=True)
+    title = Column(String(45), nullable=True)
+    description = Column(String(100), nullable=True)
+
+    analytics_chart_timestamp = Column(Integer, nullable=True)
+    square_id = Column(Integer, nullable=True)
+    edit_mode = Column(Integer, nullable=True)
+    position_index = Column(Integer, nullable=True)
+    size = Column(Integer, nullable=True)
+    type = Column(Integer, nullable=True)
+    show_legends = Column(Integer, nullable=True)
+    smart = Column(Integer, nullable=True)
+
+    def __init__(self, analytics_id,title,description,analytics_chart_timestamp,square_id,edit_mode,position_index,size,type,show_legends,smart):
+        self.analytics_id = analytics_id
+        self.title = title
+        self.description = description
+        self.analytics_chart_timestamp = analytics_chart_timestamp
+        self.square_id = square_id
+        self.edit_mode = edit_mode
+        self.position_index = position_index
+        self.size = size
+        self.type = type
+        self.show_legends = show_legends
+        self.smart = smart
+
 
 # def create_all(engine):
 #     Base.metadata.create_all(engine)

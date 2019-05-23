@@ -1,0 +1,4 @@
+app-side-bar-footer {
+    position: absolute;
+    top: calc(100% - 60px);
+}

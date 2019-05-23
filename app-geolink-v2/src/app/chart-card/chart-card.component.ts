@@ -18,7 +18,10 @@ export class ChartCardComponent implements OnInit {
     {'label': '66.6%', 'val': 'col-md-8'},
     {'label': '100%', 'val': 'col-md-12'},
   ];
-  constructor( private dashboardService: DashboardService, private snackBar: MatSnackBar) { }
+  constructor( 
+    private dashboardService: DashboardService, 
+    private snackBar: MatSnackBar
+    ) { }
 
   ngOnInit() {
   }

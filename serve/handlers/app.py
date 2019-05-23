@@ -15,22 +15,40 @@ class Login(tornado.web.RequestHandler):
 
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "Content-Type, x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, PATCH, DELETE')
 
     def options(self):
         print('OPTIONS Login')
         self.finish()
 
     def post(self):
-        # print(self.request.arguments)
         print('POST Login')
+        data = json.loads(self.request.body)
+
+        try:
+            user = self.application.db_session.query(Users).filter(Users.email==data['email']).first()
+            if user.password != data['password']:
+                self.set_status(401)
+            else:
+                resp = '{'
+                resp += '"user": {"id": "'+str(user.id)+'", "name": "'+user.name+'", "email": "'+user.email+'", "password": "'+user.password+'"},'
+
+                analyticsList = self.application.db_session.query(Analytics).filter(Analytics.id_user==user.id).all()
+                resp += '"analyticsList": ' + json.dumps( [ {'id': analytics.id, 'name': analytics.name} for analytics in analyticsList])
+
+                resp += '}'
+
+                print resp
+                self.write(resp)
+                # self.write(resp)
+
+        except Exception as e:
+            print e
+
         # FALTA VALIDAR O LOGIN E FAZER O RETURN DOS DADOS DO UTILIZADOR
-        self.write('{"user_name": "test_user"}')
         self.finish()
 
-    def get(self):
-        # self.render('login/index.html')
-        print(self.request.arguments)
-        print('GET Login')
 
 # create user
 class Register(tornado.web.RequestHandler):
@@ -50,11 +68,6 @@ class Register(tornado.web.RequestHandler):
     def post(self):
         print('POST Register')
         data = json.loads(self.request.body)
-
-        # OLD
-        # user_name = self.get_argument('user_name', None)
-        # user_email = self.get_argument('user_email', None)
-        # user_password = self.get_argument('user_password', None)
 
         user_name = data['name']
         user_email = data['email']
@@ -241,40 +254,6 @@ class LoadAllEventsData(tornado.web.RequestHandler):
         print('LoadAllEventsData')
         try:
             resp = {}
-            # df = pd.DataFrame(self.application.db_session.query(Event).all())
-
-            # st = time.time()
-            # resp['num_rows_total'] = self.application.db_session.query(Event).count()
-            # print (time.time() - st)
-            # et = time.time()
-            # distinct_types = self.application.db_session.query(Event.tipo).distinct().all()
-            # for type in distinct_types:
-            #     resp['num_'+type[0]] = distinct_types = self.application.db_session.query(Event).filter(Event.tipo == type).count()
-            #     print type[0]
-
-
-
-
-
-            # timestamp_day = 86400
-            # ts =  int(time.time()) - (169 * timestamp_day)
-            # list = []
-            #
-            # for i in range(100):
-            #     tsi = ts - timestamp_day
-            #     rows = self.application.db_session.query(Event).filter( Event.timestamp.between(tsi , ts) ).all()
-            #     print str(i) + ':'
-            #
-            #     for row in rows:
-            #         list+= [{'id': row.id, 'tipo': row.tipo, 'id_taxi': row.id_taxi, 'id_praca': row.id_praca, 'timestamp': row.timestamp }]
-            #
-            #     ts = tsi
-            # df = pd.DataFrame(list)
-            # df.to_csv(r'df.csv')
-            # print df
-            # resp = '{}'
-
-
 
             # et2 = time.time()
             # self.write(resp)
@@ -282,13 +261,11 @@ class LoadAllEventsData(tornado.web.RequestHandler):
             resp = {}
 
             ts = time.time();
-            df = pd.read_sql(self.application.db_session.query(Events).statement, self.application.db_session.bind)
-            df.to_csv(r'df.csv')
-            # df = pd.read_csv('./df.csv');
+            # df = pd.read_sql(self.application.db_session.query(Events).statement, self.application.db_session.bind)
+            # df.to_csv(r'df.csv')
+            # df = pd.read_sql(self.application.db_session.query(Events).statement, self.application.db_session.bind)
+            df = pd.read_csv('./df.csv');
 
-
-            ts = time.time();
-            df = pd.read_sql(self.application.db_session.query(Events).statement, self.application.db_session.bind)
             print df
             print time.time() - ts
 
@@ -297,3 +274,109 @@ class LoadAllEventsData(tornado.web.RequestHandler):
         except Exception as e:
             self.finish()
             print(e)
+
+# Analytics
+class CreateAnalytics(tornado.web.RequestHandler):
+    @tornado.web.asynchronous
+    @tornado.gen.engine
+
+    def set_default_headers(self):
+        print ("setting headers!!!")
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "Content-Type, x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, PATCH, DELETE')
+
+    def options(self):
+        print 'OPTIONS CreateAnalytics'
+        self.finish()
+
+    def post(self):
+        print('POST CreateAnalytics')
+        data = json.loads(self.request.body)
+
+        # user_name = data['name']
+
+        try:
+            analytics = Analytics(data['name'], data['id_user'])
+
+            # analyticsExist = self.application.db_session.query(Analytics).filter(Analytics.name==data['name']).first()
+            # if analyticsExist:
+            #     self.set_status(401)
+            # else:
+            self.application.db_session.add(analytics)
+            self.application.db_session.flush()
+            self.write('{"id": "'+str(analytics.id)+'", "name": "'+ analytics.name +'"}')
+            self.application.db_session.commit()
+            # print(user_name)
+        except Exception as e:
+            self.application.db_session.rollback()
+            print e
+            self.write('{"error": "insert analytics"}')
+
+        self.finish()
+
+class LoadAnalyticsByUserId(tornado.web.RequestHandler):
+    @tornado.web.asynchronous
+    @tornado.gen.engine
+
+    def set_default_headers(self):
+        print ("setting headers!!!")
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "Content-Type, x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, PATCH, DELETE')
+
+    def options(self):
+        print 'OPTIONS LoadAnalyticsByUserId'
+        self.finish()
+
+    def post(self):
+        print('POST LoadAnalyticsByUserId')
+        data = json.loads(self.request.body)
+        try:
+            analyticsList = self.application.db_session.query(Analytics).filter(Analytics.id_user==data['id_user']).all()
+            resp = json.dumps({{'id': analytics.id, 'name': analytics.name} for analytics in analyticsList})
+            self.write(resp)
+            # print(user_name)
+        except Exception as e:
+            self.application.db_session.rollback()
+            print e
+            self.write('{"error": "insert analytics"}')
+
+        self.finish()
+
+
+# Analytics Chart
+class CreateAnalyticsChart(tornado.web.RequestHandler):
+    @tornado.web.asynchronous
+    @tornado.gen.engine
+
+    def set_default_headers(self):
+        print ("setting headers!!!")
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "Content-Type, x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, PATCH, DELETE')
+
+    def options(self):
+        print 'OPTIONS CreateAnalyticsChart'
+        self.finish()
+
+    def post(self):
+        print('POST CreateAnalyticsChart')
+        data = json.loads(self.request.body)
+        try:
+            analytics_chart = Analytics_chart(analytics_id=data['analytics_id'], title=data['title'], description=data['description'], analytics_chart_timestamp=data['analytics_chart_timestamp'], square_id=data['square_id'], edit_mode=data['edit_mode'], position_index=data['position_index'], size=data['size'], type=data['type'], show_legends=data['show_legends'], smart=data['smart'])
+
+            # if analyticsExist:
+            #     self.set_status(401)
+            # else:
+            self.application.db_session.add(analytics_chart)
+            self.application.db_session.flush()
+            self.write('{"id": "ok"}')
+            self.application.db_session.commit()
+            # print(user_name)
+        except Exception as e:
+            self.application.db_session.rollback()
+            print e
+            self.write('{"error": "insert analytics"}')
+
+        self.finish()

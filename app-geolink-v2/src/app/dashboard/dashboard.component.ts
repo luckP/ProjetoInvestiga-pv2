@@ -6,6 +6,8 @@ import { DashBoardModel } from '../models/dashboard-model';
 import { interval } from 'rxjs';
 import { ChartDataSets } from 'chart.js';
 import { MultiDataSet } from 'ng2-charts';
+import { AuthService } from '../auth.service';
+import { NavBarService } from '../nav-bar-service.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,11 +15,18 @@ import { MultiDataSet } from 'ng2-charts';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
+  
   public charts: ChartModel[];
   public dashboards: DashBoardModel[];
   public dashboardSelected: DashBoardModel;
   public progressBarVal: any = 0;
+  
+  constructor( 
+    private dashboardService: DashboardService, 
+    private snackBar: MatSnackBar,
+    private auth: AuthService,
+    public nav: NavBarService
+    ) { }
 
   private data: any = this.dashboardService.loadData();
   public dataBox: any = {'in': 0, 'out': 0, 'out_error': 0};
@@ -45,9 +54,9 @@ export class DashboardComponent implements OnInit {
     {'label': '66.6%', 'val': 'col-md-8'},
     {'label': '100%', 'val': 'col-md-12'},
   ];
-  constructor( private dashboardService: DashboardService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.auth.checkLoged();
     this.charts = this.dashboardService.loadDashBoard();
     this.dashboards = this.dashboardService.loadDashboardsList();
     this.dashboardSelected = this.dashboards[0];

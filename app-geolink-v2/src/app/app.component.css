@@ -13,7 +13,7 @@ mat-sidenav{
 
 .sidebar-button{
     position: absolute;
-    z-index: 100;
+    z-index: 1000;
     margin: 22px;
 }
 

@@ -4,13 +4,10 @@
 
 
 <mat-sidenav-container class="example-container">
-    <mat-sidenav #sidenav mode="side" [(opened)] = "openedSide">
-        
+    <mat-sidenav #sidenav mode="side" [(opened)] = "nav.openedSide">
+        <app-side-bar class="w-100"></app-side-bar>
     </mat-sidenav>
     <mat-sidenav-content>
-            <button mat-icon-button color="accent" (click)="openedSide=!openedSide" class="sidebar-button">
-                <mat-icon aria-label="Example icon-button with a heart icon">menu</mat-icon>
-            </button>
-            <router-outlet class="m-0 p-0"></router-outlet>
+        <router-outlet class="m-0 p-0"></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

@@ -8,5 +8,7 @@ url_patterns = [
                 (r'/EditPolygon', handlers.app.EditPolygon),
                 (r'/DeletePolygon', handlers.app.DeletePolygon),
                 (r'/loadAllMapPolygons', handlers.app.LoadAllMapPolygons),
-                (r'/LoadAllEventsData', handlers.app.LoadAllEventsData)
+                (r'/LoadAllEventsData', handlers.app.LoadAllEventsData),
+                (r'/createAnalytics', handlers.app.CreateAnalytics),
+                (r'/createAnalyticsChart', handlers.app.CreateAnalyticsChart),
                ]

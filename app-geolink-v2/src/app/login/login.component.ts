@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
+import {Router} from '@angular/router';
 
 import { fromEvent } from 'rxjs';
-import { throttleTime, scan } from 'rxjs/operators';
+import { AuthService } from '../auth.service';
+import { User } from '../models/user';
+import { AnalyticsService } from '../analytics/analytics.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -19,16 +22,44 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor( 
+    private auth: AuthService,
+    private router: Router,
+    private analytics: AnalyticsService
+    ) { }
 
   ngOnInit() {
-    fromEvent(document, 'click')
-    .pipe(
-      throttleTime(1000),
-    )
-    .subscribe(count => console.log(`Clicked`));
+    
   }
 
+  public login(){
+    let user:User = {
+      id: 0,
+      name: '',
+      email: this.emailFormControl.value,
+      password: this.passwordFormControl.value,
+      status: 0
+    }
+    
+    if(this.emailFormControl.status == 'VALID' && this.passwordFormControl.status == 'VALID'){
+      this.auth.login(user)
+        .subscribe(
+          resp => {
+            console.log(resp);
+            
+            user.id = parseInt(resp.user.id)
+            user.name = resp.user.name;
+            user.password = resp.user.password;
+
+            this.auth.setUser(user);
+            this.analytics.setAnalyticsList(resp.analyticsList);
+            this.router.navigate(['/dashboard']);
+            
+          },
+          err => console.error(err)
+          );
+      }
+  }
 
   emailFormControl = new FormControl('', [
     Validators.required,

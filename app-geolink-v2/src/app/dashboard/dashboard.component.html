@@ -1,10 +1,10 @@
-<mat-progress-bar class="position-fixed" style="z-index:100" mode="determinate" *ngIf="progressBarVal" value="{{progressBarVal}}"></mat-progress-bar> 
+<mat-progress-bar class="position-fixed" mode="determinate" *ngIf="progressBarVal" value="{{progressBarVal}}"></mat-progress-bar> 
 
 <div class="dashboard-menu-container">
     <mat-card class="mat-elevation-z8 top-card">
-        <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>drag_handle</mat-icon>
-        </button> -->
+        <button mat-icon-button color="accent" (click)="nav.openCloseSideBar()" class="sidebar-button bg-white">
+            <mat-icon aria-label="Example icon-button with a heart icon">menu</mat-icon>
+        </button>
         {{dashboardSelected.name}}
         <div class="float-right">
           <span>home > <b>Dashboard</b></span> 

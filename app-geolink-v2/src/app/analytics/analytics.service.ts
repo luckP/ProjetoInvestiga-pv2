@@ -1,18 +1,56 @@
 import { Injectable } from '@angular/core';
 import { ChartModel } from '../models/chart-model';
 import { DashBoardModel } from '../models/dashboard-model';
+import { AnalyticsModel } from '../models/analytics';
+import { UrlsModel } from '../models/urlsModel';
+import { HttpClient } from '@angular/common/http';
+import { AnalyticsChartModel } from '../models/analyticsChart';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnalyticsService {
 
-  constructor() { }
+  private urlModel: UrlsModel = new UrlsModel();
+  private _addAnalyticsUrl:string = this.urlModel.getUrl()+'createAnalytics';
+  private _addAnalyticsChartUrl:string = this.urlModel.getUrl()+'createAnalyticsChart';
+  private analyticsList:AnalyticsModel[] = [];
+  private analyticsSelected:AnalyticsModel;
+
+  constructor(
+    private http: HttpClient,
+  ) { }
+
+  public addAnalytics(analytics: AnalyticsModel){
+    return this.http.post<any>(this._addAnalyticsUrl, analytics);
+  }
+
+  public addAnalyticsChart(analyticsChartModel: AnalyticsChartModel){
+    return this.http.post<any>(this._addAnalyticsChartUrl, analyticsChartModel);
+  }
+
+  public setAnalyticsList(analyticsList: AnalyticsModel[]):void{
+    this.analyticsList = analyticsList;
+  }
+
+  public getAnalyticsList(): AnalyticsModel[]{
+    return this.analyticsList;
+  }
+
+  public setAnalyticsSelected(analyticsSelected: AnalyticsModel):void{
+    this.analyticsSelected = analyticsSelected;
+  }
+
+  public getAnalyticsSelected(): AnalyticsModel{
+    return this.analyticsSelected;
+  }
+
+
 
   public loadDashBoard(): ChartModel[] {
     return [
       {
-        title:'title',
+        title:'title1',
         subtitle:'subtitle',
         chartSize: 'col-md-6',
         lock: false,
