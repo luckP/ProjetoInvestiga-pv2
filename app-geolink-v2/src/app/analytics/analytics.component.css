@@ -1,3 +1,6 @@
+ul{
+   overflow-x: hidden;
+}
 .dashboard-menu-container{
     padding: 15px 15px 0 15px;
  }
@@ -18,4 +21,9 @@
      position: fixed;
      bottom: 30px;
      right: 30px;
+  }
+
+  mat-spinner{
+   margin: auto;
+   margin-top: calc(50% - 150px);
   }

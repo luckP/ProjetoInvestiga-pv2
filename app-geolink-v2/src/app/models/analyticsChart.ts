@@ -1,14 +1,11 @@
+import { ChartModel } from './chart-model';
+
 export class AnalyticsChartModel{
-    id:number;
-    analytics_id:number;
-    title:string;
+    chart:ChartModel;
     analytics_chart_timestamp:number;
     square_id:number;
-    edit_mode:number;
     position_index:number;
-    size:number;
-    type:number;
     show_legends:number;
     smart:number;
-    description:number;
+    loading:boolean;
 }

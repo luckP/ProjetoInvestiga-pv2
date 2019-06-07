@@ -10,3 +10,8 @@
   .card-container{
      padding-top: 15px;
   }
+
+  mat-spinner {
+   margin: auto;
+   filter: grayscale(1);
+}

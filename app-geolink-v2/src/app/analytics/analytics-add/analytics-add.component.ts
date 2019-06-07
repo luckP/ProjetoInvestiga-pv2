@@ -32,11 +32,16 @@ export class AnalyticsAddComponent implements OnInit {
   }
 
   public add(){
+  console.log('teste');
+  
     let analytics:AnalyticsModel = {
       id: 0,
       id_user: this.auth.getUser().id,
       name: this.nameFormControl.value,
-    }
+    }    
+
+    console.log(analytics);
+    
 
    if(this.nameFormControl.value){
       this.analyticsService.addAnalytics(analytics)

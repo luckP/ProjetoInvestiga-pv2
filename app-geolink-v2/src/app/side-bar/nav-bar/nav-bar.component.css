@@ -1,0 +1,15 @@
+.mat-tree-node {
+  min-height: 0;
+}
+
+mat-tree.mat-tree{
+  background: transparent;
+}
+
+mat-card.example-card.mat-card {
+  background: transparent!important;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
+}

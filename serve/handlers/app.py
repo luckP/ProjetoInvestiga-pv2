@@ -28,20 +28,11 @@ class Login(tornado.web.RequestHandler):
 
         try:
             user = self.application.db_session.query(Users).filter(Users.email==data['email']).first()
-            if user.password != data['password']:
+            if user and user.password != data['password']:
                 self.set_status(401)
             else:
-                resp = '{'
-                resp += '"user": {"id": "'+str(user.id)+'", "name": "'+user.name+'", "email": "'+user.email+'", "password": "'+user.password+'"},'
-
-                analyticsList = self.application.db_session.query(Analytics).filter(Analytics.id_user==user.id).all()
-                resp += '"analyticsList": ' + json.dumps( [ {'id': analytics.id, 'name': analytics.name} for analytics in analyticsList])
-
-                resp += '}'
-
-                print resp
+                resp = {'user': {'id': str(user.id), 'name': user.name, 'email': user.email, 'password': user.password }}
                 self.write(resp)
-                # self.write(resp)
 
         except Exception as e:
             print e
@@ -74,9 +65,13 @@ class Register(tornado.web.RequestHandler):
         user_password = data['password']
 
         try:
-            user = Users(user_name, user_email, user_password)
+            user = Users(name=user_name, email=user_email, password=user_password)
             self.application.db_session.add(user)
             self.application.db_session.flush()
+
+            analytics = Analytics(name='Main Analytics', id_user=user.id)
+            self.application.db_session.add(analytics)
+
             self.write('{"id": "'+str(user.id)+'", "name": "'+ user.name +'", "email": "'+ user.email +'"}')
             self.application.db_session.commit()
             # print(user_name)
@@ -275,6 +270,35 @@ class LoadAllEventsData(tornado.web.RequestHandler):
             self.finish()
             print(e)
 
+# dashboards
+class LoadDashboardsList(tornado.web.RequestHandler):
+    @tornado.web.asynchronous
+    @tornado.gen.engine
+
+    def set_default_headers(self):
+        print ("setting headers!!!")
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "Content-Type, x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, PATCH, DELETE')
+
+    def options(self):
+        print 'OPTIONS LoadDashboardsList'
+        self.finish()
+
+    def post(self):
+        print('POST LoadDashboardsList')
+        # data = json.loads(self.request.body)
+        try:
+            dashboards = self.application.db_session.query(Dashboards).all()
+            resp = json.dumps([{'id': dashboard.id, 'name': dashboard.name} for dashboard in dashboards])
+            self.write(resp)
+        except Exception as e:
+            self.application.db_session.rollback()
+            print e
+            self.write('{"error": "LoadDashboardsList"}')
+
+        self.finish()
+
 # Analytics
 class CreateAnalytics(tornado.web.RequestHandler):
     @tornado.web.asynchronous
@@ -332,18 +356,68 @@ class LoadAnalyticsByUserId(tornado.web.RequestHandler):
     def post(self):
         print('POST LoadAnalyticsByUserId')
         data = json.loads(self.request.body)
+        print data
         try:
-            analyticsList = self.application.db_session.query(Analytics).filter(Analytics.id_user==data['id_user']).all()
-            resp = json.dumps({{'id': analytics.id, 'name': analytics.name} for analytics in analyticsList})
+            analyticsList = self.application.db_session.query(Analytics).filter(Analytics.id_user==data['id']).all()
+            if not analyticsList:
+                analytics = Analytics(data['name'], 'Main Analytics')
+                analyticsList = self.application.db_session.query(Analytics).filter(Analytics.id_user==data['id']).all()
+            resp = json.dumps([{'id': analytics.id, 'name': analytics.name} for analytics in analyticsList])
             self.write(resp)
-            # print(user_name)
         except Exception as e:
             self.application.db_session.rollback()
+            self.write('{"error": "insert LoadAnalyticsByUserId"}')
             print e
-            self.write('{"error": "insert analytics"}')
-
         self.finish()
 
+class LoadAnalyticsById(tornado.web.RequestHandler):
+    @tornado.web.asynchronous
+    @tornado.gen.engine
+
+    def set_default_headers(self):
+        print ("setting headers!!!")
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "Content-Type, x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, PATCH, DELETE')
+
+    def options(self):
+        print 'OPTIONS LoadAnalyticsById'
+        self.finish()
+
+    def post(self):
+        print('POST LoadAnalyticsById')
+        data = json.loads(self.request.body)
+
+        try:
+            print 'teste'
+            analytics = self.application.db_session.query(Analytics).filter(Analytics.id==data['id']).first()
+            analytics_charts = self.application.db_session.query(Analytics_chart).filter(Analytics_chart.analytics_id==data['id']).all()
+            resp = json.dumps({'analytics':{'id': analytics.id, 'name': analytics.name}, 'charts': [{'id': a.id, 'analytics_id': a.analytics_id, 'title': a.title, 'subtitle': a.subtitle, 'analytics_chart_timestamp': a.analytics_chart_timestamp, 'square_id': a.square_id, 'lock': a.lock, 'position_index': a.position_index, 'chartSize': a.chartSize, 'chartType': a.chartType, 'show_legends': a.show_legends, 'smart': a.smart} for a in analytics_charts]})
+            self.write(resp)
+
+
+        # id = Column(Integer, primary_key=True, autoincrement=True)
+        # analytics_id = Column(Integer, ForeignKey(Polygons.id), nullable=True)
+        # title = Column(String(45), nullable=True)
+        # subtitle = Column(String(100), nullable=True)
+        # chartSize = Column(Integer, nullable=True)
+        # lock = Column(Integer, nullable=True)
+        # chartType = Column(String(45), nullable=True)
+        # analytics_chart_timestamp = Column(Integer, nullable=True)
+        # square_id = Column(Integer, nullable=True)
+        # position_index = Column(Integer, nullable=True)
+        # show_legends = Column(Integer, nullable=True)
+        # smart = Column(Integer, nullable=True)
+
+
+
+
+        except Exception as e:
+            self.set_status(500)
+            self.application.db_session.rollback()
+            print e
+            self.write('{"error": "LoadAnalyticsById"}')
+        self.finish()
 
 # Analytics Chart
 class CreateAnalyticsChart(tornado.web.RequestHandler):
@@ -363,20 +437,46 @@ class CreateAnalyticsChart(tornado.web.RequestHandler):
     def post(self):
         print('POST CreateAnalyticsChart')
         data = json.loads(self.request.body)
+        print data
         try:
-            analytics_chart = Analytics_chart(analytics_id=data['analytics_id'], title=data['title'], description=data['description'], analytics_chart_timestamp=data['analytics_chart_timestamp'], square_id=data['square_id'], edit_mode=data['edit_mode'], position_index=data['position_index'], size=data['size'], type=data['type'], show_legends=data['show_legends'], smart=data['smart'])
-
-            # if analyticsExist:
-            #     self.set_status(401)
-            # else:
+            analytics_chart = Analytics_chart(analytics_id=data['analytics_id'], title=data['title'], subtitle=data['subtitle'], chartSize=data['chartSize'], lock=data['lock'], chartType=data['chartType'], analytics_chart_timestamp=data['analytics_chart_timestamp'], square_id=data['square_id'], position_index=data['position_index'],  show_legends=data['show_legends'], smart=data['smart'])
             self.application.db_session.add(analytics_chart)
             self.application.db_session.flush()
-            self.write('{"id": "ok"}')
+            # self.write({'id': analytics_chart.id, 'analytics_id': analytics_chart.analytics_id, 'title': analytics_chart.title, 'subtitle': analytics_chart.subtitle, 'analytics_chart_timestamp': analytics_chart.analytics_chart_timestamp, 'square_id': analytics_chart.square_id, 'lock': analytics_chart.lock, 'position_index': analytics_chart.position_index, 'chartSize': analytics_chart.chartSize, 'chartType': analytics_chart.chartType, 'show_legends': analytics_chart.show_legends, 'smart': a.smart})
+            self.write({'id': analytics_chart.id})
             self.application.db_session.commit()
-            # print(user_name)
+            # self.write({'ok':'ok'})
         except Exception as e:
             self.application.db_session.rollback()
+            self.write('{"error": "CreateAnalyticsChart"}')
             print e
-            self.write('{"error": "insert analytics"}')
+        self.finish()
 
+class DeleteAnalyticsChartById(tornado.web.RequestHandler):
+    @tornado.web.asynchronous
+    @tornado.gen.engine
+
+    def set_default_headers(self):
+        print ("setting headers!!!")
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "Content-Type, x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, PATCH, DELETE')
+
+    def options(self):
+        print 'OPTIONS DeleteAnalyticsChartById'
+        self.finish()
+
+    def post(self):
+        print('POST DeleteAnalyticsChartById')
+        data = json.loads(self.request.body)
+        print data
+        try:
+            analytics_chart = self.application.db_session.query(Analytics_chart).filter(Analytics_chart.id==data['id']).first()
+            self.application.db_session.delete(analytics_chart)
+            self.application.db_session.commit()
+
+        except Exception as e:
+            self.application.db_session.rollback()
+            self.write('{"error": "DeleteAnalyticsChartById"}')
+            print e
         self.finish()

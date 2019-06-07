@@ -3,7 +3,6 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/form
 import {ErrorStateMatcher} from '@angular/material/core';
 import {Router} from '@angular/router';
 
-import { fromEvent } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { User } from '../models/user';
 import { AnalyticsService } from '../analytics/analytics.service';
@@ -29,10 +28,9 @@ export class LoginComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    
   }
 
-  public login(){
+  public login():void{
     let user:User = {
       id: 0,
       name: '',
@@ -45,16 +43,20 @@ export class LoginComponent implements OnInit {
       this.auth.login(user)
         .subscribe(
           resp => {
-            console.log(resp);
-            
-            user.id = parseInt(resp.user.id)
-            user.name = resp.user.name;
-            user.password = resp.user.password;
 
-            this.auth.setUser(user);
-            this.analytics.setAnalyticsList(resp.analyticsList);
-            this.router.navigate(['/dashboard']);
-            
+            console.log(resp);
+            if(resp == null){
+              console.error("resp: "+ resp); 
+            }
+            else{ 
+              user.id = parseInt(resp.user.id)
+              user.name = resp.user.name;
+              user.password = resp.user.password;
+              
+              this.auth.setUser(user);
+              // this.analytics.setAnalyticsList(resp.analyticsList);
+              this.router.navigate(['/dashboard/'+user.id]);
+            }
           },
           err => console.error(err)
           );

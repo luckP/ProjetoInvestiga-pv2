@@ -3,6 +3,8 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/form
 import {ErrorStateMatcher} from '@angular/material/core';
 import {AuthService } from '../auth.service';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -23,7 +25,11 @@ export class RegisterComponent implements OnInit {
   public password:string;
   public confPassword:string;
 
-  constructor( private auth: AuthService) { }
+  constructor( 
+    private auth: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    ) { }
 
   ngOnInit() {
     
@@ -43,7 +49,14 @@ export class RegisterComponent implements OnInit {
       // console.log('ok');
       this.auth.register(user)
         .subscribe(
-          resp => console.log(resp),
+          resp => {
+            console.log(resp);
+            this.snackBar.open('Register', ('Success'), {
+              duration: 2000,
+            });
+            this.router.navigate(['/login']);
+
+          },
           err => console.error('err')
         );
     }

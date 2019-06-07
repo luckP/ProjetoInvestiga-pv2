@@ -1,3 +1,5 @@
+# set_geolink
+
 from geolink.TDB import TDB
 from geolink.taxilink import mtypes
 from geolink.decode_gps import decode_gps
@@ -30,7 +32,7 @@ def fleetFromTaxiID(tid):
 
 def processTDBs(tdb, inital_ts, final_ts):
 
-        db = MySQLdb.connect('192.168.1.234', 'root', 'a7085cLuc-', 'standsdb')
+        db = MySQLdb.connect('192.168.1.123', 'developer', 'superdeveloper', 'standsdb')
         cursor = db.cursor()
 
         taxi_list_event = {}
@@ -45,7 +47,7 @@ def processTDBs(tdb, inital_ts, final_ts):
                                 if int(mm.stop) == 0:
                                         # import pdb; pdb.set_trace()
                                         if idd in taxi_list_event:
-                                                sql = "INSERT INTO events (type, id_taxi, id_square, events_timestamp) VALUES ('%s', %d, %d, %d);"  %(rt_type['RT_FREE'], int(idd), taxi_list_event[idd], int(ts))
+                                                sql = "INSERT INTO events (type, id_taxi, id_square, events_timestamp) VALUES ('%s', %d, %d, %d);"  %(rt_type['RT_FREE'], int(idd), int(mm.stop), int(ts))
                                                 taxi_list_event.pop(idd)
                                 else:
                                         sql = "INSERT INTO events (type, id_taxi, id_square, events_timestamp) VALUES ('%s', %d, %d, %d);"  %(rt_type[mt_name[ty]], int(idd), int(mm.stop), int(ts))
@@ -54,11 +56,11 @@ def processTDBs(tdb, inital_ts, final_ts):
                                 if idd in taxi_list_event:
                                         if mt_name[ty] == mtypes.RT_BUSY:
                                                 if mm.with_passenger:
-                                                        sql = "INSERT INTO events (type, id_taxi, id_square, events_timestamp) VALUES ('%s', %d, %d, %d);" %(rt_type[mt_name[ty]]+'_p', int(idd), taxi_list_event[idd], int(ts))
+                                                        sql = "INSERT INTO events (type, id_taxi, id_square, events_timestamp) VALUES ('%s', %d, %d, %d);" %(rt_type[mt_name[ty]]+'_p', int(idd), int(mm.stop), int(ts))
                                                 else:
-                                                        sql = "INSERT INTO events (type, id_taxi, id_square, events_timestamp) VALUES ('%s', %d, %d, %d);" %(rt_type[mt_name[ty]]+'_r', int(idd), taxi_list_event[idd], int(ts))
+                                                        sql = "INSERT INTO events (type, id_taxi, id_square, events_timestamp) VALUES ('%s', %d, %d, %d);" %(rt_type[mt_name[ty]]+'_r', int(idd), int(mm.stop), int(ts))
                                         else:
-                                                sql = "INSERT INTO events (type, id_taxi, id_square, events_timestamp) VALUES ('%s', %d, %d, %d);" %(rt_type[mt_name[ty]], int(idd), taxi_list_event[idd],int(ts))
+                                                sql = "INSERT INTO events (type, id_taxi, id_square, events_timestamp) VALUES ('%s', %d, %d, %d);" %(rt_type[mt_name[ty]], int(idd), int(mm.stop),int(ts))
                                         taxi_list_event.pop(idd)
                         if sql != '':
                                 cursor.execute(sql)

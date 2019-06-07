@@ -33,6 +33,7 @@ export class DashboardService {
   public loadDashBoard(): ChartModel[] {
     return [
       {
+        id:0,
         title:'title',
         subtitle:'subtitle',
         chartSize: 'col-md-6',
@@ -117,6 +118,7 @@ export class DashboardService {
         legend: true,
       }, 
       {
+        id:0,
         title:'title',
         subtitle:'subtitle',
         chartSize: 'col-md-6',
@@ -202,6 +204,7 @@ export class DashboardService {
       },
 
       {
+        id:0,
         title:'title',
         subtitle:'subtitle',
         chartSize: 'col-md-6',

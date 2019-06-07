@@ -8,7 +8,7 @@ import { RegisterComponent } from './register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './side-bar/nav-bar/nav-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MapAddPolygonDialogComponent } from './map/map-add-polygon-dialog/map-add-polygon-dialog.component';
@@ -16,6 +16,8 @@ import { MapEditPolygonDialogComponent } from './map/map-edit-polygon-dialog/map
 import { MapDeletePolygonDialogComponent } from './map/map-delete-polygon-dialog/map-delete-polygon-dialog.component';
 import { AnalyticsAddComponent } from './analytics/analytics-add/analytics-add.component';
 import { AnalyticsChartAddComponent } from './analytics/analytics-chart-add/analytics-chart-add.component';
+import { AnalyticsChartDeleteComponent } from './analytics/analytics-chart-delete/analytics-chart-delete.component';
+
 
 // charts
 import { ChartsModule } from 'ng2-charts';
@@ -40,7 +42,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ChartCardComponent } from './chart-card/chart-card.component';
+import { ChartCardComponent } from './analytics/chart-card/chart-card.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AnalyticsComponent } from './analytics/analytics.component';
@@ -56,6 +58,11 @@ import { SideBarFooterComponent } from './side-bar/side-bar-footer/side-bar-foot
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material';
+import { MAT_DATE_LOCALE } from '@angular/material';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+
 
 
 
@@ -85,6 +92,7 @@ import { MatListModule } from '@angular/material/list';
     MapDeletePolygonDialogComponent,
     AnalyticsAddComponent,
     AnalyticsChartAddComponent,
+    AnalyticsChartDeleteComponent,
 
   ],
   imports: [
@@ -119,9 +127,13 @@ import { MatListModule } from '@angular/material/list';
     MatExpansionModule,
     MatBadgeModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    DragDropModule
   ],
   providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-PT' }, 
   ],
   entryComponents: [
     MapAddPolygonDialogComponent,

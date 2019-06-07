@@ -1,4 +1,5 @@
 <mat-accordion>
+  <!-- MAP -->
     <mat-expansion-panel (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
@@ -9,69 +10,54 @@
         <mat-panel-description></mat-panel-description>
       </mat-expansion-panel-header>
       <mat-list> 
-          <mat-list-item [routerLink]="['/map']"> Show Map </mat-list-item>
-          <mat-divider></mat-divider> 
-          <mat-list-item> Show List of Squares</mat-list-item>
-        </mat-list>
+        <mat-list-item [routerLink]="['/map']"> Show Map </mat-list-item>
+        <mat-divider></mat-divider> 
+        <mat-list-item> Show List of Squares</mat-list-item>
+      </mat-list>
 
     </mat-expansion-panel>
 
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                         (closed)="panelOpenState = false">
+    <!-- Dashboard -->
+    <mat-expansion-panel (opened)="loadDashboard($event)"
+                         (closed)="dashboardClose()">
       <mat-expansion-panel-header>
         <mat-panel-title>
             <i class="material-icons">dashboard</i>
             &nbsp;Dashboard
         </mat-panel-title>
-        <mat-panel-description></mat-panel-description>
+        <mat-panel-description>
+            <mat-spinner *ngIf="spinnerDashboard" [diameter]="15"></mat-spinner>
+        </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <mat-list> 
-        <mat-list-item [routerLink]="['/dashboard']"> Dashboard 1 </mat-list-item>
-        <mat-divider></mat-divider> 
-        <mat-list-item> Dashboard 2</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item> Dashboard 3</mat-list-item>
-      </mat-list>
+      <mat-select (selectionChange)="routeDashboard($event)" [(ngModel)]="selectDash" placeholder="Dashboard">  
+          <mat-option *ngFor="let d of dashboards" value="{{d.id}}">{{d.item}}</mat-option>
+      </mat-select>
     </mat-expansion-panel>
 
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                         (closed)="panelOpenState = false">
+    <!-- Analytics -->
+    <mat-expansion-panel (opened)="loadAnalytics($event)"
+                         (closed)="analyticsClose()"> 
       <mat-expansion-panel-header>
         <mat-panel-title>
             <i class="material-icons">timeline</i>
             &nbsp;Analytics
         </mat-panel-title>
-        <mat-panel-description></mat-panel-description>
+        <mat-panel-description>
+          <mat-spinner *ngIf="spinnerAnalytics" [diameter]="15"></mat-spinner>
+        </mat-panel-description>
       </mat-expansion-panel-header>
       
-      <mat-accordion>
-          <mat-expansion-panel (opened)="panelOpenState = true"
-                               (closed)="panelOpenState = false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                  Settings
-              </mat-panel-title>
-              <mat-panel-description></mat-panel-description>
-            </mat-expansion-panel-header>
-            <p>List</p>
-      
-          </mat-expansion-panel>
+      <mat-list> 
+        <mat-list-item> 
+          <mat-select (selectionChange)="routeAnalytics($event)" [(ngModel)]="selectAnaly" placeholder="Analytics"> 
+            <mat-option *ngFor="let a of analytics" value="{{a.id}}">{{ a.item }}</mat-option>
+          </mat-select>
+        </mat-list-item>
+        <mat-divider></mat-divider> 
+        <mat-list-item> Settings </mat-list-item>
+      </mat-list>
 
-          <mat-expansion-panel (opened)="panelOpenState = true"
-                               (closed)="panelOpenState = false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                  <i class="material-icons">list</i>
-                  &nbsp;List
-              </mat-panel-title>
-              <mat-panel-description>Analytics1</mat-panel-description>
-            </mat-expansion-panel-header>
+  </mat-expansion-panel>
 
-            <p *ngFor="let a of analytics.getAnalyticsList()" [routerLink]="['/analytics']"> {{a.name}} </p>
-      
-          </mat-expansion-panel>
-      </mat-accordion>
-
-    </mat-expansion-panel>
-  </mat-accordion>
+</mat-accordion>

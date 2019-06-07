@@ -8,7 +8,10 @@ import { AuthService } from '../auth.service';
 import { NavBarService } from '../nav-bar-service.service';
 import { AnalyticsAddComponent } from './analytics-add/analytics-add.component';
 import { AnalyticsChartAddComponent } from './analytics-chart-add/analytics-chart-add.component';
-
+import { ActivatedRoute } from '@angular/router';
+import { AnalyticsModel } from '../models/analytics';
+import { AnalyticsChartModel } from '../models/analyticsChart';
+declare var $: any;
 @Component({
   selector: 'app-analytics',
   templateUrl: './analytics.component.html',
@@ -16,18 +19,25 @@ import { AnalyticsChartAddComponent } from './analytics-chart-add/analytics-char
 })
 export class AnalyticsComponent implements OnInit {
 
-  public charts: ChartModel[];
+  public charts: AnalyticsChartModel[] =[];
   public dashboards: DashBoardModel[];
   public analyticsSelected: DashBoardModel;
   public progressBarVal: any = 0;
+  public sortebleDisabled:boolean = false;
+  public loadging:boolean  = true;
+  public analytics: AnalyticsModel = {
+    id: 0,
+    id_user: this.auth.getUser().id,
+    name: ''
+  };
 
   constructor( 
-    private analyticsService: AnalyticsService, 
+    public analyticsService: AnalyticsService, 
     private snackBar: MatSnackBar, 
     private auth: AuthService,
     public nav: NavBarService,
     public dialog: MatDialog,
-
+    private route: ActivatedRoute,
     ) { }
   
   public chartsSize:any[] = [
@@ -39,13 +49,164 @@ export class AnalyticsComponent implements OnInit {
 
   ngOnInit() {
     this.auth.checkLoged();
-    this.charts = this.analyticsService.loadDashBoard();
+  //   this.charts = this.analyticsService.loadDashBoard().map( (arg) => {
+  //     console.log(arg);
+      
+  //     return {         
+  //       chart: arg,
+  //       analytics_chart_timestamp: 1,
+  //       square_id: 1,
+  //       position_index: 1,
+  //       show_legends: 1,
+  //       smart: 1,
+  //   }
+  // });
     this.dashboards = this.analyticsService.loadDashboardsList();
     this.analyticsSelected = this.dashboards[0];
+    this.analyticsService.getAnalyticsSelected().id
 
     // alterar depois
     this.loadProgressBar();
 
+    this.route.paramMap.subscribe(params => {
+
+      if(params.get("analytics_id")){
+
+        this.analyticsService.getAnalyticsSelected().id = +params.get("analytics_id");
+        this.analyticsService.loadAnalyticsData(parseInt(params.get("analytics_id")))
+          .subscribe(
+            resp =>{
+              
+              this.analyticsService.getAnalyticsSelected().id = resp.analytics.id;
+              this.analyticsService.getAnalyticsSelected().name = resp.analytics.name;
+              this.loadging = false;
+
+              setTimeout(()=>{
+                $( function() {
+                  $( "#sortable" ).sortable({
+                    disabled: this.sortebleDisabled
+                  });
+                  $( "#sortable" ).disableSelection();
+                }
+                )}, 1000);
+              try{
+                this.analyticsService.analyticsChartModels = resp.charts.map((chart:any) => {
+                  chart =  {
+                    chart:{
+                      id: chart.id,
+                      title:chart.title,
+                      subtitle:chart.subtitle,
+                      chartSize:chart.chartSize,
+                      lock: chart.loock,
+                      datasets: [
+                        { data: [], label: 'Series A' },
+                        { data: [], label: 'Series B' },
+                        { data: [], label: 'Series C', yAxisID: 'y-axis-1' }
+                      ],
+                      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                      options: {
+                        responsive: true,
+                        scales: {
+                          // We use this empty structure as a placeholder for dynamic theming.
+                          xAxes: [{}],
+                          yAxes: [
+                            {
+                              id: 'y-axis-0',
+                              position: 'left',
+                            },
+                            {
+                              id: 'y-axis-1',
+                              position: 'right',
+                              gridLines: {
+                                color: 'rgba(255,0,0,0.3)',
+                              },
+                              ticks: {
+                                fontColor: 'red',
+                              }
+                            }
+                          ]
+                        },
+                        annotation: {
+                          annotations: [
+                            {
+                              type: 'line',
+                              mode: 'vertical',
+                              scaleID: 'x-axis-0',
+                              value: 'March',
+                              borderColor: 'orange',
+                              borderWidth: 2,
+                              label: {
+                                enabled: true,
+                                fontColor: 'orange',
+                                content: 'LineAnno'
+                              }
+                            },
+                          ],
+                        },
+                      },
+                      colors:[
+                        { // grey
+                          backgroundColor: 'rgba(148,159,177,0.2)',
+                          borderColor: 'rgba(148,159,177,1)',
+                          pointBackgroundColor: 'rgba(148,159,177,1)',
+                          pointBorderColor: '#fff',
+                          pointHoverBackgroundColor: '#fff',
+                          pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+                        },
+                        { // dark grey
+                          backgroundColor: 'rgba(77,83,96,0.2)',
+                          borderColor: 'rgba(77,83,96,1)',
+                          pointBackgroundColor: 'rgba(77,83,96,1)',
+                          pointBorderColor: '#fff',
+                          pointHoverBackgroundColor: '#fff',
+                          pointHoverBorderColor: 'rgba(77,83,96,1)'
+                        },
+                        { // red
+                          backgroundColor: 'rgba(255,0,0,0.3)',
+                          borderColor: 'red',
+                          pointBackgroundColor: 'rgba(148,159,177,1)',
+                          pointBorderColor: '#fff',
+                          pointHoverBackgroundColor: '#fff',
+                          pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+                        }
+                      ],
+                      legend:true,
+
+                      chartType: 'line',
+                      chartTypes:[
+                        {'icon': 'show_chart', 'label': 'Line', 'val': 'line'},
+                        {'icon': 'bar_chart', 'label': 'Bar', 'val': 'bar'}
+                      ],
+                    },
+                    analytics_chart_timestamp:15,
+                    square_id:chart.square_id,
+                    position_index:chart.position_index,
+                    show_legends:chart.show_legends,
+                    smart:chart.smart,
+                    loading:true,
+                  }
+
+                  // make search
+                  setTimeout(_=>{ 
+                    chart.loading = false;
+                    chart.chart.datasets = [ 
+                    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+                    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
+                    { data: [180, 480, 770, 90, 1000, 270, 400], label: 'Series C', yAxisID: 'y-axis-1' }
+                  ]}, 3000);
+                  return chart;
+                });
+
+              }catch(err){
+                console.error('error');
+                
+              }
+          },
+          err =>{
+          }
+        );
+      }})
+    
   }
 
   selectDashboard(dashboard: DashBoardModel):void{
@@ -69,6 +230,7 @@ export class AnalyticsComponent implements OnInit {
 
   openAddDialog(): void {
     const dialogRef = this.dialog.open(AnalyticsAddComponent, {
+        
     });
   
     dialogRef.afterClosed().subscribe(result => {
@@ -78,6 +240,7 @@ export class AnalyticsComponent implements OnInit {
 
   createChartDialog(){
     const dialogRef = this.dialog.open(AnalyticsChartAddComponent, {
+      width: '50%',
     });
   
     dialogRef.afterClosed().subscribe(result => {
