@@ -39,6 +39,7 @@ export class DashboardService {
         chartSize: 'col-md-6',
         lock: false,
         chartType: 'line',
+        show_legends: false,
         chartTypes:[
           {'icon': 'show_chart', 'label': 'Line', 'val': 'line'},
           {'icon': 'bar_chart', 'label': 'Bar', 'val': 'bar'}
@@ -115,7 +116,6 @@ export class DashboardService {
             pointHoverBorderColor: 'rgba(148,159,177,0.8)'
           }
         ],
-        legend: true,
       }, 
       {
         id:0,
@@ -123,6 +123,7 @@ export class DashboardService {
         subtitle:'subtitle',
         chartSize: 'col-md-6',
         lock: false,
+        show_legends: false,
         chartType: 'line',
         chartTypes:[
           {'icon': 'show_chart', 'label': 'Line', 'val': 'line'},
@@ -200,7 +201,6 @@ export class DashboardService {
             pointHoverBorderColor: 'rgba(148,159,177,0.8)'
           }
         ],
-        legend: true,
       },
 
       {
@@ -210,6 +210,7 @@ export class DashboardService {
         chartSize: 'col-md-6',
         lock: false,
         chartType: 'line',
+        show_legends: false,
         chartTypes:[
           {'icon': 'show_chart', 'label': 'Line', 'val': 'line'},
           {'icon': 'bar_chart', 'label': 'Bar', 'val': 'bar'}
@@ -286,7 +287,6 @@ export class DashboardService {
             pointHoverBorderColor: 'rgba(148,159,177,0.8)'
           }
         ],
-        legend: true,
       }
     ];
   }

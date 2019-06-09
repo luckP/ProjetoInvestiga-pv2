@@ -2,12 +2,13 @@
     <div class="flex-item">
       <div style="display: block;">
       <canvas baseChart 
-                  [datasets]="cahrt.datasets" 
-                  [labels]="cahrt.labels"
-                  [options]="cahrt.options"
-                  [colors]="cahrt.colors"
-                  [legend]="cahrt.legend" 
-                  [chartType]="cahrt.chartType"
+                  height = "100"
+                  [datasets]="chart.datasets" 
+                  [labels]="chart.labels"
+                  [options]="chart.options"
+                  [colors]="chart.colors"
+                  [legend]="chart.show_legends" 
+                  [chartType]="chart.chartType"
                   (chartHover)="chartHovered($event)"
                   (chartClick)="chartClicked($event)">
                 </canvas>

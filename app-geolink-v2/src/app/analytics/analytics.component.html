@@ -1,30 +1,30 @@
 
-<mat-progress-bar class="position-fixed" style="z-index:100" mode="determinate" *ngIf="progressBarVal" value="{{progressBarVal}}"></mat-progress-bar> 
+  <mat-progress-bar class="position-fixed" style="z-index:100" mode="determinate" *ngIf="progressBarVal" value="{{progressBarVal}}"></mat-progress-bar> 
 
-<div class="dashboard-menu-container">
-    <mat-card class="mat-elevation-z8 top-card">
-        <button mat-icon-button color="accent" (click)="nav.openCloseSideBar()" class="sidebar-button bg-white">
-          <mat-icon aria-label="Example icon-button with a heart icon">menu</mat-icon>
-        </button>
-        {{analyticsSelected.name}}
-        <button mat-stroked-button color="primary" class="add" (click)="openAddDialog()">
-          <span>Add Analitycs</span><mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
-        </button>
-    </mat-card>
-</div>
-    
-<ul *ngIf ="!loadging" id="sortable" class="cards-container row">
-  <li *ngFor="let chart of analyticsService.analyticsChartModels" id="{{chart.chart.id}}" class="{{ chart.chart.chartSize }}">
-    <!-- {{chart | json}} -->
-    <app-chart-card class="app-chart-card" [chart]=chart></app-chart-card>
-  </li>
-</ul>
+  <div class="analytics-menu-container">
+      <mat-card class="mat-elevation-z8 top-card">
+          <button mat-icon-button color="accent" (click)="nav.openCloseSideBar()" class="sidebar-button bg-white">
+            <mat-icon aria-label="Example icon-button with a heart icon">menu</mat-icon>
+          </button>
+          <button mat-stroked-button color="primary" class="add" (click)="openAddDialog()">
+            <span>Add Analitycs</span><mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+          </button>
+      </mat-card>
+  </div>
+      
+  <ul *ngIf ="!loadging" id="sortable" class="cards-container row">
+    <li *ngFor="let chart of analyticsService.analyticsChartModels" id="{{chart.chart.id}}" class="{{ chart.chart.chartSize }}">
+      <!-- {{chart | json}} -->
+      <app-chart-card class="app-chart-card" [chart]=chart></app-chart-card>
+    </li>
+  </ul>
 
-<div *ngIf="loadging">
-    <mat-spinner></mat-spinner>
-</div>
+  <div *ngIf="loadging">
+      <mat-spinner></mat-spinner>
+  </div>
 
 
-<button mat-mini-fab class="add-chart-button" color="primary" (click)="createChartDialog()">
-  <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
-</button>
+  <button mat-mini-fab class="add-chart-button" color="primary" (click)="createChartDialog()">
+    <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+  </button>
+

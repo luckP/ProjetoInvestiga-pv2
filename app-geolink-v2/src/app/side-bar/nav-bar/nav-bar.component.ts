@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import { NavBarService } from 'src/app/nav-bar-service.service';
 import { Router } from '@angular/router';
+import { AnalyticsService } from 'src/app/analytics/analytics.service';
 
 export class NavOption{
   item: string;
@@ -27,6 +28,7 @@ export class NavBarComponent{
   constructor(
     private navBarService: NavBarService,
     private router: Router,
+    public analyticsService: AnalyticsService,
     ){}
 
     ngOnInit(): void {
@@ -51,7 +53,7 @@ export class NavBarComponent{
         resp=>{
           if(resp){
             this.spinnerAnalytics = false;
-            this.analytics = resp.map(node => {return {id: node.id, item: node.name}});
+            this.analyticsService.analyticsList = resp.map(node => {return {id: node.id, name: node.name}});
             
           }
         },

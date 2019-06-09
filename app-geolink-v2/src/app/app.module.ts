@@ -17,7 +17,7 @@ import { MapDeletePolygonDialogComponent } from './map/map-delete-polygon-dialog
 import { AnalyticsAddComponent } from './analytics/analytics-add/analytics-add.component';
 import { AnalyticsChartAddComponent } from './analytics/analytics-chart-add/analytics-chart-add.component';
 import { AnalyticsChartDeleteComponent } from './analytics/analytics-chart-delete/analytics-chart-delete.component';
-
+import { AnalyticsControllerComponent } from './analytics/analytics-controller/analytics-controller.component';
 
 // charts
 import { ChartsModule } from 'ng2-charts';
@@ -62,6 +62,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
 import { MAT_DATE_LOCALE } from '@angular/material';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { SquareControllerComponent } from './square-controller/square-controller.component';
 
 
 
@@ -93,6 +96,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     AnalyticsAddComponent,
     AnalyticsChartAddComponent,
     AnalyticsChartDeleteComponent,
+    AnalyticsControllerComponent,
+    SquareControllerComponent,
 
   ],
   imports: [
@@ -130,7 +135,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatListModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    DragDropModule
+    DragDropModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-PT' }, 
@@ -141,6 +148,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MapDeletePolygonDialogComponent,
     AnalyticsAddComponent,
     AnalyticsChartAddComponent,
+    AnalyticsChartDeleteComponent,
   ],
   bootstrap: [AppComponent]
 })

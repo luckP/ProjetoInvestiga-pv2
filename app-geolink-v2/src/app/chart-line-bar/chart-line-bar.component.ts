@@ -10,9 +10,9 @@ import { ChartModel } from '../models/chart-model';
 })
 export class ChartLineBarComponent implements OnInit {
 
-  @Input() cahrt: ChartModel;
+  @Input() chart: ChartModel;
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  @ViewChild(BaseChartDirective) chartBaseChartDirective: BaseChartDirective;
 
   constructor() { }
 
@@ -21,11 +21,11 @@ export class ChartLineBarComponent implements OnInit {
 
   // events
   public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
+    // console.log(event, active);
   }
 
   public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
+    // console.log(event, active);
   }
 
 }

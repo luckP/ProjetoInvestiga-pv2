@@ -1,0 +1,19 @@
+.analytics-menu-container{
+    padding: 15px 15px 0 15px;
+ }
+ .card-container{
+    padding: 15px;
+ }
+
+ table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td, th {
+    width: 25%;
+  }

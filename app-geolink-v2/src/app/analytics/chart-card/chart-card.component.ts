@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DashboardService } from '../../dashboard/dashboard.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { AnalyticsChartModel } from 'src/app/models/analyticsChart';
 import { AnalyticsService } from '../analytics.service';
+import { AnalyticsChartDeleteComponent } from '../analytics-chart-delete/analytics-chart-delete.component';
 declare var $:any;
 
 @Component({
@@ -22,7 +23,8 @@ export class ChartCardComponent implements OnInit {
   ];
   constructor( 
     private analyticsService: AnalyticsService, 
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog,
     ) { }
 
   ngOnInit() {
@@ -34,29 +36,47 @@ export class ChartCardComponent implements OnInit {
     this.snackBar.open('Chart lock', (chart.chart.lock+''), {
       duration: 2000,
     });
+    this.editSimpleCard();
   }
 
   onClickDelete(){
-    this.analyticsService.deleteChart(this.chart.chart.id)
+    const dialogRef = this.dialog.open(AnalyticsChartDeleteComponent, {
+      width: '350px',
+      data: {id: this.chart.chart.id}
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  // Edit parameters that don't neet to confirm
+  editSimpleCard(){
+    let chart:any = {
+      'id': this.chart.chart.id,
+      'analytics_id': this.chart.analytics_id,
+      'title':this.chart.chart.title,
+      'subtitle':this.chart.chart.subtitle,
+      'chartSize':this.chart.chart.chartSize,
+      'lock':this.chart.chart.lock,
+      'chartType':this.chart.chart.chartType,
+      'show_legends':(this.chart.chart.show_legends),
+      'square_id':this.chart.square_id,
+      'analytics_chart_timestamp':this.chart.analytics_chart_timestamp,
+      'position_index':this.chart.position_index,
+      'smart':this.chart.smart,
+    }
+    this.analyticsService.editChart(chart)
       .subscribe(
         resp=>{
-          $('#'+this.chart.chart.id).hide();
-
-          this.snackBar.open('Delete', ('Success'), {
-            duration: 2000,
-          });
+          
         },
         err=>{
-          console.error('onClickDelete');
-          
-        }
-      );
+          console.error('editSimpleCard');
+          this.snackBar.open('Fail to connect to server', ('=('), {
+            duration: 2000,
+          });
+        });
+    }
   }
-
-  ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
     
-  }
-
-}

@@ -51,11 +51,11 @@
       <mat-list> 
         <mat-list-item> 
           <mat-select (selectionChange)="routeAnalytics($event)" [(ngModel)]="selectAnaly" placeholder="Analytics"> 
-            <mat-option *ngFor="let a of analytics" value="{{a.id}}">{{ a.item }}</mat-option>
+            <mat-option *ngFor="let a of analyticsService.analyticsList" value="{{a.id}}">{{ a.name }}</mat-option>
           </mat-select>
         </mat-list-item>
         <mat-divider></mat-divider> 
-        <mat-list-item> Settings </mat-list-item>
+        <mat-list-item [routerLink]="['/analytics-controller']" routerLinkActive="router-link-active" > Settings </mat-list-item>
       </mat-list>
 
   </mat-expansion-panel>

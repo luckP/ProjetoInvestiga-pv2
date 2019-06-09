@@ -1,13 +1,15 @@
 ul{
    overflow-x: hidden;
 }
-.dashboard-menu-container{
+.analytics-menu-container{
     padding: 15px 15px 0 15px;
  }
  
  .cards-container{
-     padding: 0 15px 15px 15px;
-  }
+   padding: 0 0 25px 0;
+   margin: 0;
+   background: transparent;
+}
  
   .app-chart-card{
      padding-bottom: 15px;

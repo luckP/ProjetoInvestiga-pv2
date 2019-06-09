@@ -14,7 +14,8 @@ url_patterns = [
                 (r'/loadAnalyticsById', handlers.app.LoadAnalyticsById),
                 (r'/loadDashboardsList', handlers.app.LoadDashboardsList),
                 (r'/loadAnalyticsByUserId', handlers.app.LoadAnalyticsByUserId),
-                (r'/deleteAnalyticsChartById', handlers.app.DeleteAnalyticsChartById)
+                (r'/deleteAnalyticsChartById', handlers.app.DeleteAnalyticsChartById),
+                (r'/editAnalyticsChartById', handlers.app.EditAnalyticsChartById),
 
 
                ]

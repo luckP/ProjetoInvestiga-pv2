@@ -21,7 +21,6 @@ export class AnalyticsComponent implements OnInit {
 
   public charts: AnalyticsChartModel[] =[];
   public dashboards: DashBoardModel[];
-  public analyticsSelected: DashBoardModel;
   public progressBarVal: any = 0;
   public sortebleDisabled:boolean = false;
   public loadging:boolean  = true;
@@ -49,20 +48,8 @@ export class AnalyticsComponent implements OnInit {
 
   ngOnInit() {
     this.auth.checkLoged();
-  //   this.charts = this.analyticsService.loadDashBoard().map( (arg) => {
-  //     console.log(arg);
-      
-  //     return {         
-  //       chart: arg,
-  //       analytics_chart_timestamp: 1,
-  //       square_id: 1,
-  //       position_index: 1,
-  //       show_legends: 1,
-  //       smart: 1,
-  //   }
-  // });
-    this.dashboards = this.analyticsService.loadDashboardsList();
-    this.analyticsSelected = this.dashboards[0];
+    // this.dashboards = this.analyticsService.loadDashboardsList();
+    // this.analyticsSelected = this.dashboards[0];
     this.analyticsService.getAnalyticsSelected().id
 
     // alterar depois
@@ -92,12 +79,13 @@ export class AnalyticsComponent implements OnInit {
               try{
                 this.analyticsService.analyticsChartModels = resp.charts.map((chart:any) => {
                   chart =  {
+                    analytics_id: resp.analytics.id,
                     chart:{
                       id: chart.id,
                       title:chart.title,
                       subtitle:chart.subtitle,
                       chartSize:chart.chartSize,
-                      lock: chart.loock,
+                      lock: chart.lock === 1,
                       datasets: [
                         { data: [], label: 'Series A' },
                         { data: [], label: 'Series B' },
@@ -170,22 +158,20 @@ export class AnalyticsComponent implements OnInit {
                           pointHoverBorderColor: 'rgba(148,159,177,0.8)'
                         }
                       ],
-                      legend:true,
+                      show_legends:chart.show_legends === 0,
 
-                      chartType: 'line',
+                      chartType: chart.chartType,
                       chartTypes:[
                         {'icon': 'show_chart', 'label': 'Line', 'val': 'line'},
                         {'icon': 'bar_chart', 'label': 'Bar', 'val': 'bar'}
                       ],
                     },
-                    analytics_chart_timestamp:15,
+                    analytics_chart_timestamp:chart.analytics_chart_timestamp,
                     square_id:chart.square_id,
                     position_index:chart.position_index,
-                    show_legends:chart.show_legends,
                     smart:chart.smart,
                     loading:true,
                   }
-
                   // make search
                   setTimeout(_=>{ 
                     chart.loading = false;
@@ -194,6 +180,7 @@ export class AnalyticsComponent implements OnInit {
                     { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
                     { data: [180, 480, 770, 90, 1000, 270, 400], label: 'Series C', yAxisID: 'y-axis-1' }
                   ]}, 3000);
+                  
                   return chart;
                 });
 
@@ -207,10 +194,6 @@ export class AnalyticsComponent implements OnInit {
         );
       }})
     
-  }
-
-  selectDashboard(dashboard: DashBoardModel):void{
-    this.analyticsSelected = dashboard;
   }
 
   loadProgressBar():void{

@@ -12,7 +12,7 @@ export class ChartModel{
     labels: Label[];
     options: (ChartOptions & { annotation: any });
     colors:Color[];
-    legend:boolean;
+    show_legends:boolean;
 
     chartType:string;
     chartTypes:any[];

@@ -437,7 +437,6 @@ class CreateAnalyticsChart(tornado.web.RequestHandler):
     def post(self):
         print('POST CreateAnalyticsChart')
         data = json.loads(self.request.body)
-        print data
         try:
             analytics_chart = Analytics_chart(analytics_id=data['analytics_id'], title=data['title'], subtitle=data['subtitle'], chartSize=data['chartSize'], lock=data['lock'], chartType=data['chartType'], analytics_chart_timestamp=data['analytics_chart_timestamp'], square_id=data['square_id'], position_index=data['position_index'],  show_legends=data['show_legends'], smart=data['smart'])
             self.application.db_session.add(analytics_chart)
@@ -469,7 +468,6 @@ class DeleteAnalyticsChartById(tornado.web.RequestHandler):
     def post(self):
         print('POST DeleteAnalyticsChartById')
         data = json.loads(self.request.body)
-        print data
         try:
             analytics_chart = self.application.db_session.query(Analytics_chart).filter(Analytics_chart.id==data['id']).first()
             self.application.db_session.delete(analytics_chart)
@@ -478,5 +476,48 @@ class DeleteAnalyticsChartById(tornado.web.RequestHandler):
         except Exception as e:
             self.application.db_session.rollback()
             self.write('{"error": "DeleteAnalyticsChartById"}')
+            print e
+        self.finish()
+
+class EditAnalyticsChartById(tornado.web.RequestHandler):
+    @tornado.web.asynchronous
+    @tornado.gen.engine
+
+    def set_default_headers(self):
+        print ("setting headers!!!")
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "Content-Type, x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, PATCH, DELETE')
+
+    def options(self):
+        print 'OPTIONS EditAnalyticsChartById'
+        self.finish()
+
+    def post(self):
+        print('POST EditAnalyticsChartById')
+        data = json.loads(self.request.body)
+        print data
+        try:
+            analytics_chart = self.application.db_session.query(Analytics_chart).filter(Analytics_chart.id==data['id']).first()
+            analytics_chart.analytics_id = data['analytics_id']
+            analytics_chart.title = data['title']
+            analytics_chart.subtitle = data['subtitle']
+            analytics_chart.chartSize = data['chartSize']
+            analytics_chart.lock = data['lock']
+            analytics_chart.chartType = data['chartType']
+            analytics_chart.analytics_chart_timestamp = data['analytics_chart_timestamp']
+            analytics_chart.square_id = data['square_id']
+            analytics_chart.position_index = data['position_index']
+            analytics_chart.show_legends = 0 if data['show_legends'] else 1
+            analytics_chart.smart = data['smart']
+
+            print data['show_legends']
+
+            self.application.db_session.commit()
+
+        except Exception as e:
+            self.application.db_session.rollback()
+            self.set_status(500)
+            self.write('{"error": "EditAnalyticsChartById"}')
             print e
         self.finish()

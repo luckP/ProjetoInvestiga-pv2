@@ -17,7 +17,8 @@ export class AnalyticsService {
   private _addAnalyticsChartUrl:string = this.urlModel.getUrl()+'createAnalyticsChart';
   private _loadAnalyticsById = this.urlModel.getUrl()+"loadAnalyticsById";
   private _deleteAnalyticsChartById = this.urlModel.getUrl()+"deleteAnalyticsChartById";
-  private analyticsList:AnalyticsModel[] = [];
+  private _editAnalyticsChartById = this.urlModel.getUrl()+'editAnalyticsChartById';
+  public analyticsList:AnalyticsModel[] = [];
   public analyticsChartModels: AnalyticsChartModel[] = [];
   private analyticsSelected:AnalyticsModel = {id: 0, id_user: this.auth.getUser().id, name: ''};
 
@@ -55,18 +56,20 @@ export class AnalyticsService {
     return this.http.post<any>(this._deleteAnalyticsChartById, {'id': analytics_id});
   }
 
+  public editChart(chart: any){
+    return this.http.post<any>(this._editAnalyticsChartById, chart);
+  }
+
   public pushAnalyticsChartModel(chartElement){
-
-    
-
-
-      let chart = {
+      let chart:AnalyticsChartModel = {
+      analytics_id: chartElement['analytics_id'],
       chart:{
         id: chartElement['id'],
         title:chartElement['title'],
         subtitle:chartElement['subtitle'],
         chartSize:chartElement['chartSize'],
         lock: false,
+        show_legends: false,
         datasets: [
           { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
           { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
@@ -139,7 +142,6 @@ export class AnalyticsService {
             pointHoverBorderColor: 'rgba(148,159,177,0.8)'
           }
         ],
-        legend:true,
 
         chartType: 'line',
         chartTypes:[
@@ -150,7 +152,6 @@ export class AnalyticsService {
       analytics_chart_timestamp:15,
       square_id:chartElement['square_id'],
       position_index:chartElement['position_index'],
-      show_legends:chartElement['show_legends'],
       smart:chartElement['smart'],
       loading:true,
     };
@@ -176,6 +177,7 @@ export class AnalyticsService {
         chartSize: 'col-md-6',
         lock: false,
         chartType: 'line',
+        show_legends: false,
         chartTypes:[
           {'icon': 'show_chart', 'label': 'Line', 'val': 'line'},
           {'icon': 'bar_chart', 'label': 'Bar', 'val': 'bar'}
@@ -252,7 +254,6 @@ export class AnalyticsService {
             pointHoverBorderColor: 'rgba(148,159,177,0.8)'
           }
         ],
-        legend: true,
       }, 
       {
         id:0,
@@ -260,6 +261,7 @@ export class AnalyticsService {
         subtitle:'subtitle',
         chartSize: 'col-md-6',
         lock: false,
+        show_legends: false,
         chartType: 'line',
         chartTypes:[
           {'icon': 'show_chart', 'label': 'Line', 'val': 'line'},
@@ -337,7 +339,6 @@ export class AnalyticsService {
             pointHoverBorderColor: 'rgba(148,159,177,0.8)'
           }
         ],
-        legend: true,
       },
 
       {
@@ -346,6 +347,7 @@ export class AnalyticsService {
         subtitle:'subtitle',
         chartSize: 'col-md-6',
         lock: false,
+        show_legends: false,
         chartType: 'line',
         chartTypes:[
           {'icon': 'show_chart', 'label': 'Line', 'val': 'line'},
@@ -423,17 +425,16 @@ export class AnalyticsService {
             pointHoverBorderColor: 'rgba(148,159,177,0.8)'
           }
         ],
-        legend: true,
       }
     ];
   }
 
-  public loadDashboardsList(): DashBoardModel[]{
-    return [
-      {id: 1, name: 'dashboard1'},
-      {id: 2, name: 'dashboard2'},
-      {id: 3, name: 'dashboard3'},
-      {id: 4, name: 'dashboard4'}
-    ];
-  }
+  // public loadDashboardsList(): DashBoardModel[]{
+  //   return [
+  //     {id: 1, name: 'dashboard1'},
+  //     {id: 2, name: 'dashboard2'},
+  //     {id: 3, name: 'dashboard3'},
+  //     {id: 4, name: 'dashboard4'}
+  //   ];
+  // }
 }

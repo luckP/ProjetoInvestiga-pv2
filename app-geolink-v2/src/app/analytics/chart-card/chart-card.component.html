@@ -13,19 +13,19 @@
             <mat-menu #menu="matMenu">
                 <button mat-menu-item>
                     <mat-icon>label</mat-icon>
-                    <mat-slide-toggle color="primary" [(ngModel)]="chart.chart.legend">Legend</mat-slide-toggle>
+                    <mat-slide-toggle color="primary" [(ngModel)]="chart.chart.show_legends" (ngModelChange)="editSimpleCard()">Legend</mat-slide-toggle>
                 </button>
                 
                 <button mat-menu-item>
                     <mat-icon>photo_size_select_small</mat-icon>
-                    <mat-select [(ngModel)]="chart.chart.chartSize">
+                    <mat-select [(ngModel)]="chart.chart.chartSize" (ngModelChange)="editSimpleCard()">
                         <mat-option *ngFor="let size of chartsSize" value="{{ size.val }}">{{ size.label }}
                         </mat-option>
                     </mat-select>
                 </button>
                 
                 <button *ngIf="chart.chart.chartTypes.length>1" mat-menu-item>
-                    <mat-radio-group aria-label="Select an option" [(ngModel)]="chart.chart.chartType">
+                    <mat-radio-group aria-label="Select an option" [(ngModel)]="chart.chart.chartType" (ngModelChange)="editSimpleCard()">
                         <mat-radio-button *ngFor="let option of chart.chart.chartTypes" value="{{ option.val }}" color="primary">
                             {{ option.label | uppercase }}
                             <mat-icon>option.icon</mat-icon>    
@@ -37,7 +37,7 @@
         </mat-card-header>
         <mat-card-content>
 
-            <app-chart-line-bar *ngIf="!chart.loading" class="card-component" [cahrt]="chart.chart"></app-chart-line-bar>
+            <app-chart-line-bar *ngIf="!chart.loading" class="card-component" [chart]="chart.chart"></app-chart-line-bar>
             <mat-spinner *ngIf="chart.loading"></mat-spinner> 
         </mat-card-content>
         <mat-card-actions align="end">
