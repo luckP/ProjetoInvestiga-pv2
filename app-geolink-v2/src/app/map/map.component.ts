@@ -5,22 +5,25 @@ import { MatDialog } from '@angular/material';
 import { MapAddPolygonDialogComponent } from './map-add-polygon-dialog/map-add-polygon-dialog.component';
 import { MapEditPolygonDialogComponent } from './map-edit-polygon-dialog/map-edit-polygon-dialog.component';
 import { MapDeletePolygonDialogComponent } from './map-delete-polygon-dialog/map-delete-polygon-dialog.component';
+import { MapService } from './map.service';
 declare var L: any;
 declare var $:any;
-
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
+
 export class MapComponent implements OnInit {
   private map:any;
+  private squares:any = new L.FeatureGroup();
 
   constructor(
     private auth: AuthService, 
     public nav: NavBarService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private mapService: MapService,
     ) { }
 
   ngOnInit() {
@@ -30,7 +33,7 @@ export class MapComponent implements OnInit {
 
   loadMap(): void {
     // MAP
-    this.map = L.map('map').setView([51.505, -0.09], 13);
+    this.map = L.map('map').setView([41.1579, -8.6291], 13);
     // var marker = L.marker([51.5, -0.09]).addTo(map);
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
@@ -38,8 +41,7 @@ export class MapComponent implements OnInit {
       attribution: 'Geolink &copy;'
     }).addTo(this.map);
 
-    var drawnItems = new L.FeatureGroup();
-    this.map.addLayer(drawnItems);
+    this.map.addLayer(this.squares);
 
   var drawControl = new L.Control.Draw({
     position: 'topright',
@@ -51,29 +53,18 @@ export class MapComponent implements OnInit {
       marker: false
     },
     edit: {
-      featureGroup: drawnItems,
+      featureGroup: this.squares,
       remove: true
     }
   });
+
   this.map.addControl(drawControl);
+  this.loadSquares();
 
   this.map.on(L.Draw.Event.CREATED, (e:any) => {
-    var type = e.layerType,
-    layer = e.layer;
-
-    // here you got the polygon points
-    var latlngs = layer._latlngs[0];
-    
-    // showPopup('popup_new_polygon',
-    //   ()=>{
-    //     polygon = new Polygon(0, $('#polygon_name').val(), $('#polygon_color').val(), latlngs);
-    //     polygon.insertPolygon();
-    //   },
-    //   ()=>{
-    //     closePopUp('opup_new_polygon');
-    //   });
-    drawnItems.addLayer(layer);
-    this.openAddDialog();
+    const layer = e.layer;
+    // this.squares.addLayer(layer);
+    this.openAddDialog(layer._latlngs[0]);
   });
 
 
@@ -97,13 +88,33 @@ export class MapComponent implements OnInit {
   });
 }
 
+loadSquares(){
+  this.mapService.loadSquare({})
+    .subscribe(
+      resp => {this.drawSquares(resp)},
+      err  => {console.error(err);}
+    );
+}
+
+drawSquares(squares: any){
+  for(let s in squares){
+      L.polygon(squares[s]['coors'], {
+        color: squares[s]['color'],
+        fillColor: squares[s]['color'],
+        fillOpacity: 0.5})
+      .addTo(this.squares);
+  }
+}
+
 // dialogs
-openAddDialog(): void {
+openAddDialog(_layer): void {
   const dialogRef = this.dialog.open(MapAddPolygonDialogComponent, {
+    width: '450px',
+    data: {layer: _layer}
   });
 
   dialogRef.afterClosed().subscribe(result => {
-    console.log('The dialog was closed');
+    this.drawSquares(result)
   });
 }
 
@@ -123,6 +134,11 @@ openDeleteDialog(): void {
   dialogRef.afterClosed().subscribe(result => {
     console.log('The dialog was closed');
   });
+}
+
+navOpenClose(){
+  setTimeout(()=>{ this.map.invalidateSize()}, 100);
+  this.nav.openCloseSideBar();
 }
 
 }

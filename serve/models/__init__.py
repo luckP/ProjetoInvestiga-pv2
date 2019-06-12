@@ -60,8 +60,8 @@ class Events(Base):
         self.id_square = id_square
         self.events_timestamp = events_timestamp
 
-class Polygons(Base):
-    __tablename__ = 'polygons'
+class Square(Base):
+    __tablename__ = 'square'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(45), nullable=False)
     color = Column(String(45), nullable=False)
@@ -72,16 +72,16 @@ class Polygons(Base):
         self.color = color
         self.status = status
 
-class Polygon_coordinate(Base):
-    __tablename__ = 'polygon_coordinates'
+class Square_coordinates(Base):
+    __tablename__ = 'square_coordinate'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    id_polygon = Column(Integer, ForeignKey(Polygons.id), nullable=True)
+    id_square = Column(Integer, ForeignKey(Square.id), nullable=True)
     index = Column(Integer, nullable=True)
     lat = Column(Float, nullable=True)
     lng = Column(Float, nullable=True)
 
-    def __init__(self, id_polygon=None, index=None, lat=None, lng=None):
-        self.id_polygon=id_polygon
+    def __init__(self, id_square=None, index=None, lat=None, lng=None):
+        self.id_square=id_square
         self.index=index;
         self.lat=lat
         self.lng=lng
@@ -101,7 +101,7 @@ class Analytics(Base):
 class Analytics_chart(Base):
     __tablename__ = 'analytics_chart'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    analytics_id = Column(Integer, ForeignKey(Polygons.id), nullable=True)
+    analytics_id = Column(Integer, ForeignKey(Square.id), nullable=True)
     title = Column(String(45), nullable=True)
     subtitle = Column(String(100), nullable=True)
     chartSize = Column(String(45), nullable=True)
@@ -112,8 +112,9 @@ class Analytics_chart(Base):
     position_index = Column(Integer, nullable=True)
     show_legends = Column(Integer, nullable=True)
     smart = Column(Integer, nullable=True)
+    time_window = Column(Integer, nullable=True)
 
-    def __init__(self, analytics_id, title, subtitle, chartSize, lock, chartType, analytics_chart_timestamp, square_id, position_index, show_legends, smart ):
+    def __init__(self, analytics_id, title, subtitle, chartSize, lock, chartType, analytics_chart_timestamp, square_id, position_index, show_legends, smart, time_window=None ):
         self.analytics_id = analytics_id
         self.title = title
         self.subtitle = subtitle
@@ -125,6 +126,7 @@ class Analytics_chart(Base):
         self.position_index = position_index
         self.show_legends = show_legends
         self.smart = smart
+        self.time_window = time_window
 
 class Dashboards(Base):
     __tablename__ = 'dashboards'

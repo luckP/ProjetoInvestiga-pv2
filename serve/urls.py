@@ -4,10 +4,12 @@ import handlers.app
 url_patterns = [
                 (r'/Login', handlers.app.Login),
                 (r'/Register', handlers.app.Register),
-                (r'/InsertPoligon', handlers.app.InsertPoligon),
-                (r'/EditPolygon', handlers.app.EditPolygon),
-                (r'/DeletePolygon', handlers.app.DeletePolygon),
-                (r'/loadAllMapPolygons', handlers.app.LoadAllMapPolygons),
+
+                (r'/insertSquare', handlers.app.InsertSquare),
+                (r'/editSquare', handlers.app.EditSquare),
+                (r'/deleteSquare', handlers.app.DeleteSquare),
+                (r'/loadAllMapsquares', handlers.app.LoadAllMapSquares),
+
                 (r'/LoadAllEventsData', handlers.app.LoadAllEventsData),
                 (r'/createAnalytics', handlers.app.CreateAnalytics),
                 (r'/createAnalyticsChart', handlers.app.CreateAnalyticsChart),
@@ -16,6 +18,5 @@ url_patterns = [
                 (r'/loadAnalyticsByUserId', handlers.app.LoadAnalyticsByUserId),
                 (r'/deleteAnalyticsChartById', handlers.app.DeleteAnalyticsChartById),
                 (r'/editAnalyticsChartById', handlers.app.EditAnalyticsChartById),
-
-
+                (r'/loadAnalyticsChartDataById', handlers.app.LoadAnalyticsChartDataById),
                ]

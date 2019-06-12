@@ -65,7 +65,10 @@ export class ChartCardComponent implements OnInit {
       'analytics_chart_timestamp':this.chart.analytics_chart_timestamp,
       'position_index':this.chart.position_index,
       'smart':this.chart.smart,
+      'time_window': this.chart.time_window,
     }
+    console.log(chart);
+    
     this.analyticsService.editChart(chart)
       .subscribe(
         resp=>{

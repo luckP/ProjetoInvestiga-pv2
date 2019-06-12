@@ -40,9 +40,9 @@ def processTDBs(tdb, inital_ts, final_ts):
     rt_type = {'RT_PAUSE': 'pause', 'RT_TAXISTOP': 'stop', 'RT_FREE': 'free', 'RT_BUSY': 'busy', 'RT_ACCEPT_SERVICE_ASSIGNMENT': 'recolha'}
     for idd, ts, ty, msg in tdb.iterate_all(inital_ts * 1000, final_ts * 1000, types=[mtypes.RT_PAUSE, mtypes.RT_TAXISTOP, mtypes.RT_FREE, mtypes.RT_BUSY, mtypes.RT_ACCEPT_SERVICE_ASSIGNMENT]):
 
-	       try:
+        try:
         # taxis porto
-            if int(taxi_list_event[idd]) < 64:
+            # if int(taxi_list_event[idd]) < 64:
                 ts = ts/1000
                 mm = Message.unpack(ty, msg)
                 sql = ''
@@ -51,11 +51,10 @@ def processTDBs(tdb, inital_ts, final_ts):
                         # import pdb; pdb.set_trace()
                         if idd in taxi_list_event:
                             sql = "INSERT INTO events (type, id_taxi, id_square, events_timestamp) VALUES ('%s', %d, %d, %d);"  %(rt_type['RT_FREE'], int(idd), taxi_list_event[idd], int(ts))
-
                             taxi_list_event.pop(idd)
-                        else:
-                            sql = "INSERT INTO events (type, id_taxi, id_square, events_timestamp) VALUES ('%s', %d, %d, %d);"  %(rt_type[mt_name[ty]], int(idd), int(mm.stop), int(ts))
-                            taxi_list_event[idd] = mm.stop
+                    else:
+                        sql = "INSERT INTO events (type, id_taxi, id_square, events_timestamp) VALUES ('%s', %d, %d, %d);"  %(rt_type[mt_name[ty]], int(idd), int(mm.stop), int(ts))
+                        taxi_list_event[idd] = mm.stop
                 else:
                     if idd in taxi_list_event:
                         if mt_name[ty] == mtypes.RT_BUSY:
@@ -69,11 +68,10 @@ def processTDBs(tdb, inital_ts, final_ts):
                 if sql != '':
                     cursor.execute(sql)
                     db.commit()
-
-    except Exception as e:
+        except Exception as e:
             print e
-    		# pass
-    #exportFile.txt
+        		# pass
+        #exportFile.txt`
 
 
 

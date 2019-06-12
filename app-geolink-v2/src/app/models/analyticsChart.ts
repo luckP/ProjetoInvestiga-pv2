@@ -8,4 +8,5 @@ export class AnalyticsChartModel{
     position_index:number;
     smart:number;
     loading:boolean;
+    time_window:number;
 }

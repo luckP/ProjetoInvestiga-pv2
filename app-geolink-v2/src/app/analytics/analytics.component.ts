@@ -54,13 +54,14 @@ export class AnalyticsComponent implements OnInit {
 
     // alterar depois
     this.loadProgressBar();
+    if(this.auth.getUser().id!=0){
 
-    this.route.paramMap.subscribe(params => {
-
-      if(params.get("analytics_id")){
-
-        this.analyticsService.getAnalyticsSelected().id = +params.get("analytics_id");
-        this.analyticsService.loadAnalyticsData(parseInt(params.get("analytics_id")))
+      this.route.paramMap.subscribe(params => {
+        
+        if(params.get("analytics_id")){
+          
+          this.analyticsService.getAnalyticsSelected().id = +params.get("analytics_id");
+          this.analyticsService.loadAnalyticsData(parseInt(params.get("analytics_id")))
           .subscribe(
             resp =>{
               
@@ -84,6 +85,7 @@ export class AnalyticsComponent implements OnInit {
                       id: chart.id,
                       title:chart.title,
                       subtitle:chart.subtitle,
+                      square_id:chart.square_id,
                       chartSize:chart.chartSize,
                       lock: chart.lock === 1,
                       datasets: [
@@ -91,7 +93,7 @@ export class AnalyticsComponent implements OnInit {
                         { data: [], label: 'Series B' },
                         { data: [], label: 'Series C', yAxisID: 'y-axis-1' }
                       ],
-                      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                      labels: [],
                       options: {
                         responsive: true,
                         scales: {
@@ -170,30 +172,55 @@ export class AnalyticsComponent implements OnInit {
                     square_id:chart.square_id,
                     position_index:chart.position_index,
                     smart:chart.smart,
+                    time_window:chart.time_window,
                     loading:true,
                   }
                   // make search
-                  setTimeout(_=>{ 
-                    chart.loading = false;
-                    chart.chart.datasets = [ 
-                    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-                    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
-                    { data: [180, 480, 770, 90, 1000, 270, 400], label: 'Series C', yAxisID: 'y-axis-1' }
-                  ]}, 3000);
+                  chart.chart['time_window'] = chart.time_window
+
+                  const _chart = {
+                    'analytics_id': chart.chart.analytics_id,
+                    'title': chart.chart.title,
+                    'subtitle': chart.chart.subtitle,
+                    'chartSize': chart.chart.chartSize,
+                    'lock': chart.chart.lock,
+                    'chartType': chart.chart.chartType,
+                    'analytics_chart_timestamp': chart.analytics_chart_timestamp,
+                    'square_id': chart.square_id,
+                    'position_index': chart.position_index,
+                    'show_legends': chart.show_legends,
+                    'smart': chart.smart,
+                    'time_window': chart.time_window,
+                  };
+                  
+                  this.analyticsService.loadAnalyticsChartDataById(_chart)
+                    .subscribe(
+                      resp=>{
+                        console.log(resp);
+
+                        chart.loading = false;
+                        chart.chart.datasets = resp['data'];
+                        chart.chart.labels = resp['labels'];
+                      },
+                      err=>{
+                        this.snackBar.open('Error to contact server', ('=('), {
+                          duration: 2000
+                        });
+                      }
+                    );
                   
                   return chart;
                 });
 
               }catch(err){
-                console.error('error');
-                
+                console.error('error'); 
               }
           },
           err =>{
           }
         );
       }})
-    
+    }
   }
 
   loadProgressBar():void{

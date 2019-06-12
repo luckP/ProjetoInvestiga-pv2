@@ -32,10 +32,11 @@ export class AnalyticsChartAddComponent implements OnInit {
       'analytics_id': this.analyticsService.getAnalyticsSelected().id,
       'title':this.titleFormControl.value,
       'subtitle':this.subtitleTitleFormControl.value,
+      'time_window': this.timeWindowFormControl.valid,
       'chartSize':'col-md-6',
       'lock':0,
       'chartType':'line',
-      'square_id':1,
+      'square_id':this.subtitleTitleFormControl.value,
       'analytics_chart_timestamp':0,
       'position_index':0,
       'show_legends':0,
@@ -70,6 +71,14 @@ export class AnalyticsChartAddComponent implements OnInit {
   subtitleTitleFormControl = new FormControl('', [
     Validators.required,
   ]);
+
+  timeWindowFormControl = new FormControl('', [
+    Validators.required,
+  ]);
+
+  squareTitleFormControl = new FormControl('',[
+    Validators.required,
+  ])
 
   matcher = new MyErrorStateMatcher();
 

@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MapComponent } from './map/map.component';
 import { AnalyticsComponent } from './analytics/analytics.component';
 import { AnalyticsControllerComponent } from './analytics/analytics-controller/analytics-controller.component';
+import { SquareControllerComponent } from './map/square-controller/square-controller.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'dashboard/:dashboard_id', component: DashboardComponent },
   { path: 'map', component: MapComponent },
   { path: 'analytics/:analytics_id', component: AnalyticsComponent },
-  { path: 'analytics-controller', component: AnalyticsControllerComponent}
+  { path: 'analytics-controller', component: AnalyticsControllerComponent},
+  { path: 'square-controller', component: SquareControllerComponent }
 ];
 
 @NgModule({

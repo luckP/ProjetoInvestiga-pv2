@@ -1,5 +1,6 @@
 <h2 mat-dialog-title>Add Analytics Chart</h2>
 <div mat-dialog-content class="mat-typography">
+
     <mat-form-field class="example-full-width">
       <input matInput #title placeholder="Title" maxlength="45" [formControl]="titleFormControl"
               [errorStateMatcher]="matcher">
@@ -24,20 +25,21 @@
 <div class="row">
     <mat-form-field class="col-4" >
       <mat-label>List of squares taxis</mat-label>
-      <mat-select>
+      <mat-select [formControl]="squareTitleFormControl"> 
       <mat-option *ngFor="let square of squares" [value]="square">
       {{square}}
       </mat-option>
       </mat-select>
+      <mat-error *ngIf="subtitleTitleFormControl.hasError('required')">
+          Square is <strong>required</strong>
+        </mat-error>
     </mat-form-field>
 
     <mat-form-field class="col-4" >
-        <mat-label>List of squares taxis</mat-label>
-        <mat-select>
-        <mat-option *ngFor="let square of squares" [value]="square">
-        {{square}}
-        </mat-option>
-        </mat-select>
+        <mat-label>Time Window</mat-label>
+        <input matInput placeholder="Time Window" 
+            [formControl]="timeWindowFormControl"  
+            [errorStateMatcher]="matcher">
       </mat-form-field>
     
     <mat-form-field class="col-4"> 

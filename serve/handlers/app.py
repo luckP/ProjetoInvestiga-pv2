@@ -6,7 +6,11 @@ import tornado.httpclient
 from models import *
 import json
 import pandas as pd
+from pandas import Index
+from numpy import arange
 import time
+import sys
+import collections
 # import motor
 
 class Login(tornado.web.RequestHandler):
@@ -83,51 +87,51 @@ class Register(tornado.web.RequestHandler):
         self.finish()
 
 # POLYGONS
-class InsertPoligon(tornado.web.RequestHandler):
+class InsertSquare(tornado.web.RequestHandler):
     @tornado.web.asynchronous
     @tornado.gen.engine
     # @tornado.web.authenticated
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "Content-Type, x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, PATCH, DELETE')
 
     def options(self):
-        print "OPTIONS InsertPoligon"
+        print "OPTIONS InsertSquare"
         self.finish()
 
     def post(self):
-        print "POST InsertPoligon"
-        name = self.get_argument('name', None)
-        color = self.get_argument('color', None)
-        status = int(self.get_argument('status', None))
-        latlngs = json.loads(self.get_argument('latlngs', None))
+        print "POST InsertSquare"
+        data = json.loads(self.request.body)
 
         try:
-            # id = self.application.db_session.query(Polygon).
-            polygon = Polygons(name, color, status)
-
-            self.application.db_session.add(polygon)
+            # print data
+            square = Square(name=data['name'], color=data['color'], status=data['status'])
+            self.application.db_session.add(square)
             self.application.db_session.flush()
+
+            self.insertCoordinate(data['layer'], square.id)
             self.application.db_session.commit()
-            id = polygons.id
-            self.write('{"id": "'+str(id))
-            self.insertCoordinate(latlngs, id)
+
+            resp = {square.id: {'id': square.id, 'name': square.name, 'color': square.color, 'status': square.status, 'coors': [  [square_coordinates.lat, square_coordinates.lng] for square_coordinates in self.application.db_session.query(Square_coordinates).filter(Square_coordinates.id_square==square.id).all()]}}
+            self.write(resp)
 
         except Exception as e:
+            self.set_status(500)
             self.application.db_session.rollback()
             print(str(e))
-            self.write('{"error": "insert"}')
+            self.write({'error': 'insert'})
 
         self.finish()
 
     def insertCoordinate(self, latlngs, id):
         for index in range(len(latlngs)):
-            polygon_coordinate = Polygon_coordinates(id, index, float(latlngs[index]['lat']), float(latlngs[index]['lng']))
+            square_coordinate = Square_coordinates(id_square=id, index=index, lat=float(latlngs[index]['lat']), lng=float(latlngs[index]['lng']))
+            self.application.db_session.add(square_coordinate)
+        # self.application.db_session.commit()
 
-            self.application.db_session.add(polygon_coordinate)
-            self.application.db_session.commit()
 
-
-class EditPolygon(tornado.web.RequestHandler):
+class EditSquare(tornado.web.RequestHandler):
     @tornado.web.asynchronous
     @tornado.gen.engine
     # @tornado.web.authenticated
@@ -136,11 +140,11 @@ class EditPolygon(tornado.web.RequestHandler):
         self.set_header("Access-Control-Allow-Origin", "*")
 
     def options(self):
-        print "OPTIONS EditPolygon"
+        print "OPTIONS EditSquare"
         self.finish()
 
     def post(self):
-        print('PSOT EditPolygon')
+        print('PSOT EditSquare')
         id = int(self.get_argument('id', None))
         latlngs = json.loads(self.get_argument('latlngs', None))[0]
 
@@ -157,19 +161,19 @@ class EditPolygon(tornado.web.RequestHandler):
 
     def insertCoordinate(self, latlngs, id):
         for index in range(len(latlngs)):
-            polygon_coordinate = Polygon_coordinates(id, index, float(latlngs[index]['lat']), float(latlngs[index]['lng']))
-            self.application.db_session.add(polygon_coordinate)
+            square_coordinate = Square_coordinates(id, index, float(latlngs[index]['lat']), float(latlngs[index]['lng']))
+            self.application.db_session.add(square_coordinate)
             self.application.db_session.commit()
             print(index)
 
     def deleteCoordinate(self, id):
         # Polygon_coordinate.query.filter_by(polygon_id = id).delete()
-        obj = Polygon_coordinates.__table__.delete().where(Polygon_coordinates.id_polygon.in_([id]))
+        obj = Square_coordinates.__table__.delete().where(Square_coordinates.id_square.in_([id]))
         self.application.db_session.execute(obj)
         self.application.db_session.commit()
 
 
-class DeletePolygon(tornado.web.RequestHandler):
+class DeleteSquare(tornado.web.RequestHandler):
     @tornado.web.asynchronous
     @tornado.gen.engine
     # @tornado.web.authenticated
@@ -178,16 +182,16 @@ class DeletePolygon(tornado.web.RequestHandler):
         self.set_header("Access-Control-Allow-Origin", "*")
 
     def options(self):
-        print('OPTIONS DeletePolygon')
+        print('OPTIONS DeleteSquare')
         self.finish()
 
     def post(self):
-        print('POST DeletePolygon')
+        print('POST DeleteSquare')
         id = self.get_argument('id', None)
         print('id: '+str(id))
 
         try:
-            obj = Polygons.__table__.delete().where(Polygons.id.in_([id]))
+            obj = Square.__table__.delete().where(Square.id.in_([id]))
             self.application.db_session.execute(obj)
             self.application.db_session.commit()
 
@@ -198,41 +202,33 @@ class DeletePolygon(tornado.web.RequestHandler):
 
         self.finish()
 
-class LoadAllMapPolygons(tornado.web.RequestHandler):
+class LoadAllMapSquares(tornado.web.RequestHandler):
     @tornado.web.asynchronous
     @tornado.gen.engine
     # @tornado.web.authenticated
 
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "Content-Type, x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, PATCH, DELETE')
 
     def options(self):
         self.finish()
 
     def post(self):
-        print('LoadAllMapPolygons')
+        print('LoadAllMapSquare')
         try:
             # SELECT * FROM standsdb.polygon INNER JOIN standsdb.polygon_coordinate on standsdb.polygon_coordinate.id_polygon = standsdb.polygon .id;
-            polygons = self.application.db_session.query(Polygons).all()
-            polygon_coordinates = self.application.db_session.query(Polygon_coordinates).all()
-            response_polygons = {}
-            response_polygons_coordinates = {}
-            count = 1
-            for polygon in polygons:
-                 response_polygons[count] = { 'id': polygon.id, 'name': polygon.name, 'color': polygon.color}
-                 count+=1
+            squares = self.application.db_session.query(Square).all()
 
-            count = 1
-            for polygon_coordinate in polygon_coordinates:
-                 response_polygons_coordinates[count] = { 'id': polygon_coordinate.id, 'id_polygon': polygon_coordinate.id_polygon, 'index': polygon_coordinate.index, 'lat': polygon_coordinate.lat, 'lng': polygon_coordinate.lng}
-                 count+=1
-
-            self.write({'response_polygons': response_polygons, 'response_polygons_coordinates': response_polygons_coordinates})
-            self.finish()
+            resp = {square.id: {'id': square.id, 'name': square.name, 'color': square.color, 'status': square.status, 'coors': [  [square_coordinates.lat, square_coordinates.lng] for square_coordinates in self.application.db_session.query(Square_coordinates).filter(Square_coordinates.id_square==square.id).all()]} for square in squares }
+            self.write(resp)
 
         except Exception as e:
+            self.set_status(500)
             print(e)
 #
+        self.finish()
 
 class LoadAllEventsData(tornado.web.RequestHandler):
     @tornado.web.asynchronous
@@ -389,10 +385,9 @@ class LoadAnalyticsById(tornado.web.RequestHandler):
         data = json.loads(self.request.body)
 
         try:
-            print 'teste'
             analytics = self.application.db_session.query(Analytics).filter(Analytics.id==data['id']).first()
             analytics_charts = self.application.db_session.query(Analytics_chart).filter(Analytics_chart.analytics_id==data['id']).all()
-            resp = json.dumps({'analytics':{'id': analytics.id, 'name': analytics.name}, 'charts': [{'id': a.id, 'analytics_id': a.analytics_id, 'title': a.title, 'subtitle': a.subtitle, 'analytics_chart_timestamp': a.analytics_chart_timestamp, 'square_id': a.square_id, 'lock': a.lock, 'position_index': a.position_index, 'chartSize': a.chartSize, 'chartType': a.chartType, 'show_legends': a.show_legends, 'smart': a.smart} for a in analytics_charts]})
+            resp = json.dumps({'analytics':{'id': analytics.id, 'name': analytics.name}, 'charts': [{'id': a.id, 'analytics_id': a.analytics_id, 'title': a.title, 'subtitle': a.subtitle, 'analytics_chart_timestamp': a.analytics_chart_timestamp, 'square_id': a.square_id, 'lock': a.lock, 'position_index': a.position_index, 'chartSize': a.chartSize, 'chartType': a.chartType, 'show_legends': a.show_legends, 'smart': a.smart, 'time_window': a.time_window} for a in analytics_charts]})
             self.write(resp)
 
 
@@ -438,7 +433,7 @@ class CreateAnalyticsChart(tornado.web.RequestHandler):
         print('POST CreateAnalyticsChart')
         data = json.loads(self.request.body)
         try:
-            analytics_chart = Analytics_chart(analytics_id=data['analytics_id'], title=data['title'], subtitle=data['subtitle'], chartSize=data['chartSize'], lock=data['lock'], chartType=data['chartType'], analytics_chart_timestamp=data['analytics_chart_timestamp'], square_id=data['square_id'], position_index=data['position_index'],  show_legends=data['show_legends'], smart=data['smart'])
+            analytics_chart = Analytics_chart(analytics_id=data['analytics_id'], title=data['title'], subtitle=data['subtitle'], chartSize=data['chartSize'], lock=data['lock'], chartType=data['chartType'], analytics_chart_timestamp=data['analytics_chart_timestamp'], square_id=data['square_id'], position_index=data['position_index'],  show_legends=data['show_legends'], smart=data['smart'], time_window=data['time_window'])
             self.application.db_session.add(analytics_chart)
             self.application.db_session.flush()
             # self.write({'id': analytics_chart.id, 'analytics_id': analytics_chart.analytics_id, 'title': analytics_chart.title, 'subtitle': analytics_chart.subtitle, 'analytics_chart_timestamp': analytics_chart.analytics_chart_timestamp, 'square_id': analytics_chart.square_id, 'lock': analytics_chart.lock, 'position_index': analytics_chart.position_index, 'chartSize': analytics_chart.chartSize, 'chartType': analytics_chart.chartType, 'show_legends': analytics_chart.show_legends, 'smart': a.smart})
@@ -510,8 +505,7 @@ class EditAnalyticsChartById(tornado.web.RequestHandler):
             analytics_chart.position_index = data['position_index']
             analytics_chart.show_legends = 0 if data['show_legends'] else 1
             analytics_chart.smart = data['smart']
-
-            print data['show_legends']
+            analytics_chart.time_window = int(data['time_window'])
 
             self.application.db_session.commit()
 
@@ -519,5 +513,86 @@ class EditAnalyticsChartById(tornado.web.RequestHandler):
             self.application.db_session.rollback()
             self.set_status(500)
             self.write('{"error": "EditAnalyticsChartById"}')
+            print e
+        self.finish()
+
+
+
+class LoadAnalyticsChartDataById(tornado.web.RequestHandler):
+    @tornado.web.asynchronous
+    @tornado.gen.engine
+
+    def set_default_headers(self):
+        print ("setting headers!!!")
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "Content-Type, x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, PATCH, DELETE')
+
+    def options(self):
+        print 'OPTIONS LoadAnalyticsChartDataById'
+        self.finish()
+
+    def post(self):
+        print('POST LoadAnalyticsChartDataById')
+        data = json.loads(self.request.body)
+        print data
+        try:
+            seg_val = 60*data['time_window'] #data['time_window']*
+            day_val = 60*60*24 #day
+            event_type = 'out'
+            max_timestamp = 1541289582
+
+            df = pd.read_sql(self.application.db_session.query(Events).filter(Events.id_square==data['square_id']).statement, self.application.db_session.bind)
+            df = df[['type', 'events_timestamp']]
+
+            # df['day'] = df['events_timestamp'].apply(lambda val: int(val/86400)*86400)
+            df['day'] = df['events_timestamp'].apply(lambda val: int(val/day_val)*day_val)
+            df['events_timestamp'] = df['events_timestamp'].apply(lambda val: int(val/seg_val)*seg_val)
+            df['type'] = df['type'].apply(lambda val: 'in' if val in ['regeitado', 'pause'] else 'out' if val in ['recolha', 'busy'] else 'out_error' )
+
+            df_select = df[df['day'] == data['analytics_chart_timestamp']]
+
+            df_select = df_select[df_select['type'] == event_type].groupby('events_timestamp').count().reset_index()
+            new_index = Index(arange(df_select.iloc[0]['events_timestamp'],df_select.iloc[0]['events_timestamp']+day_val, seg_val) , name="events_timestamp")
+            df_select = df_select.set_index('events_timestamp').reindex(new_index, fill_value=0).reset_index()
+
+            # print df_select
+
+            index_min_df = 0
+            val_min_df = sys.maxint
+            df_error =  df_select.set_index('events_timestamp').reindex(new_index, fill_value=0).reset_index()
+            df_prediction = df_select.set_index('events_timestamp').reindex(new_index, fill_value=0).reset_index()
+            try:
+                for day in df['day'].unique():
+                    df_check = df[df['day'] == day]
+                    df_check = df_check[df_check['type'] == event_type].groupby('events_timestamp').count().reset_index()
+                    new_index2 = Index(arange(df_check.iloc[0]['events_timestamp'],df_check.iloc[0]['events_timestamp']+day_val, seg_val) , name="events_timestamp")
+                    df_check = df_check.set_index('events_timestamp').reindex(new_index2, fill_value=0).reset_index()
+
+                    result = df_check.sub(df_select, fill_value=0)
+                    result = result.abs()
+                    value = result['type'].sum()
+                    # print value
+                    if value < val_min_df and df_check['type'].sum()!=0 and day != data['analytics_chart_timestamp']:
+                        print df_check['type'].sum()
+                        index_min_df = day
+                        val_min_df = value
+                        df_error = result
+                        df_prediction = df_check
+            except Exception as e:
+                print e
+
+            original =  json.loads(df_select['type'].to_json()).values()
+            prediction = json.loads(df_prediction['type'].to_json()).values()
+            error_val = json.loads(df_error['type'].to_json()).values()
+
+            resp = {'data': [{ 'data': original, 'label': 'Original' },{ 'data': prediction, 'label': 'Prediction' }, {'data': error_val, 'label': 'Error'}], 'labels': [ i for i in range(len(original))]}
+            # resp = {'data': [{ 'data': [65, 59, 80, 81, 56, 55, 40], 'label': 'Series A' },{ 'data': [28, 48, 40, 19, 86, 27, 90], 'label': 'Series B' },{ 'data': [180, 480, 770, 90, 1000, 270, 400], 'label': 'Series C'}], 'labels': ['January', 'February', 'March', 'April', 'May', 'June', 'July']}
+
+            self.write(resp)
+
+        except Exception as e:
+            self.set_status(500)
+            self.write('{"error": "LoadAnalyticsChartDataById"}')
             print e
         self.finish()

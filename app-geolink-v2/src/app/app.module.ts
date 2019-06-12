@@ -64,7 +64,8 @@ import { MAT_DATE_LOCALE } from '@angular/material';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { SquareControllerComponent } from './square-controller/square-controller.component';
+import { SquareControllerComponent } from './map/square-controller/square-controller.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 
@@ -137,7 +138,8 @@ import { SquareControllerComponent } from './square-controller/square-controller
     MatNativeDateModule,
     DragDropModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTooltipModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-PT' }, 

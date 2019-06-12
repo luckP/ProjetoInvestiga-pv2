@@ -1,3 +1,25 @@
-<p>
-  map-add-polygon-dialog works!
-</p>
+<h1 mat-dialog-title>Save Square</h1>
+<div mat-dialog-content>
+  <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Name" [formControl]="nameFormControl"
+               [errorStateMatcher]="matcher">
+        <mat-error *ngIf="nameFormControl.hasError('required')">
+          Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <form class="example-form"></form>
+          <mat-form-field class="example-full-width">
+            <input type="color" matInput placeholder="Color" [formControl]="colorFormControl"
+                   [errorStateMatcher]="matcher">
+            <mat-error *ngIf="colorFormControl.hasError('required')">
+              Color is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="">Don't Save</button> 
+  <button mat-button  (click)="onClickSave()" cdkFocusInitial>Save</button>  
+</div>

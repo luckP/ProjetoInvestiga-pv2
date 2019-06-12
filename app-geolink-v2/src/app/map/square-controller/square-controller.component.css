@@ -1,0 +1,25 @@
+.dashboard-menu-container, .card-container{
+    padding: 15px;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+.div-color{
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  position: absolute;
+  margin-top: 5px;
+  margin-left: -13px;
+}
